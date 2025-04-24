@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 
 # Print out the title for Page 1: View stock info dataframe
-st.title("Page 1: View Stock Data")
+st.title("Page 1: Info about this App")
 
 # Display the Pandas dataframe of the stock data from yfinance
 #  Note: The stock info dataframe is stored in a StreamLit "session state" that allows the data to be shared across
