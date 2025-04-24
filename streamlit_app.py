@@ -15,16 +15,12 @@ App_page_2 = st.Page(
     "pages/page2.py",
     title="2) Parameters of Trained Model"
 )
-App_page_3 = st.Page(
-    "pages/page3.py",
-    title="Page 3: See Stock Price Graph"
-)
 
 # **** Set up navigation with section headers ****
 pg = st.navigation(
     {
         "Start Here:": [App_page_0],
-        "Dashboard Options": [App_page_1, App_page_2, App_page_3],
+        "Dashboard Options": [App_page_1, App_page_2],
     }
 )
 
