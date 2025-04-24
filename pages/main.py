@@ -1,28 +1,25 @@
 import streamlit as st
 import pandas as pd
-import yfinance as yf
 
-# Print out info for the Main page:
-st.title("Main Page: Please select a stock")
-st.header("<---- Enter ticker & dates in Sidebar Prompts.")
+# ---------------------------
+# Data loader (cached)
+# ---------------------------
+@st.cache_data(show_spinner=False)
+def load_data(path: str = "esg_cleaned_final.csv") -> pd.DataFrame:
+    return pd.read_csv(path)
 
-# Sidebar inputs for ticker symbol and dates
-ticker_symbol = st.sidebar.text_input("Enter Stock Ticker (e.g., AAPL, MSFT)", value="MSFT")
-start_date = st.sidebar.date_input("Start Date", value=pd.to_datetime("2024-01-01"))
-end_date = st.sidebar.date_input("End Date", value=pd.to_datetime("2024-12-31"))
+df = load_data()
 
-# Print update onb which ticker and dates
-st.write(f"You have selected **{ticker_symbol}** from {start_date} to {end_date}.")
-st.markdown(''':red[Now click on] :blue-background[Page 1, 2 or 3] to the left to view analyses.''')
+# ---------------------------
+# Page content
+# ---------------------------
+st.title("📊 Dataset Overview")
 
-# Access the stock data for the given tocker using the yfinance "download" function
-# Temporarily store data in "df" dataframe
-df = yf.download(ticker_symbol, start=start_date, end=end_date)
-if df.empty:
-   st.error("No data found. Please check the ticker symbol or date range.")
-   st.stop()
+st.write("Preview of the cleaned ESG & financial dataset used throughout the dashboard.")
 
+st.dataframe(df.head())
 
-#  Note: The stock info dataframe (df) is stored in a StreamLit "session state" that allows the data to be shared across
-#        the mutiple pages (ie, main.py, page1.py, page2.py and page4.py)
-st.session_state.data = df
+st.markdown(
+    "---\n"
+    "*Tip: use the navigation bar at the top to dive into EDA or modeling pages.*"
+)
