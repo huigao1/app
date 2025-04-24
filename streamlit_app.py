@@ -4,16 +4,16 @@ import streamlit as st
 # **** Page layout setup ****
 App_page_0 = st.Page(
     "pages/main.py",
-    title="Click here to select stock",
+    title="Info about this App",
     default=True
 )
 App_page_1 = st.Page(
     "pages/page1.py",
-    title="Page 1: See Raw Stock Data"
+    title="1) Model Training Code"
 )
 App_page_2 = st.Page(
     "pages/page2.py",
-    title="Page 2: See Data Statistics"
+    title="2) Parameters of Trained Model"
 )
 App_page_3 = st.Page(
     "pages/page3.py",
