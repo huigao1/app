@@ -1,33 +1,36 @@
-# Import Streamlit
 import streamlit as st
 
-# **** Page layout setup ****
-App_page_0 = st.Page(
-    "pages/main.py",
-    title="Info about this App",
-    default=True
-)
-App_page_1 = st.Page(
-    "pages/page1.py",
-    title="1) Model Training Code"
-)
-App_page_2 = st.Page(
-    "pages/page2.py",
-    title="2) Parameters of Trained Model"
-)
+# -------------------------------------------------------------
+# GLOBAL CONFIGURATION (must be first Streamlit call)
+# -------------------------------------------------------------
+st.set_page_config(page_title="ESG Analytics Dashboard", page_icon="💹", layout="wide")
 
-# **** Set up navigation with section headers ****
-pg = st.navigation(
-    {
-        "Start Here:": [App_page_0],
-        "Dashboard Options": [App_page_1, App_page_2],
-    }
-)
+# -------------------------------------------------------------
+# PAGE REGISTRATION (file‑based)
+# -------------------------------------------------------------
+App_page_0 = st.Page("pages/main.py",     title="Dataset Overview",   icon="ℹ️", default=True)
+App_page_1 = st.Page("pages/eda.py",      title="Exploratory Analysis", icon="🔍")
+App_page_2 = st.Page("pages/industry.py", title="Industry ESG",        icon="🏭")
+App_page_3 = st.Page("pages/trends.py",   title="Time‑Series Trends",  icon="⏳")
+App_page_4 = st.Page("pages/model.py",    title="Model Training",      icon="🤖")
 
+pg = st.navigation({
+    "Start":  [App_page_0],
+    "EDA":    [App_page_1, App_page_2, App_page_3],
+    "Model":  [App_page_4],
+})
 
-# **** text/images shared on all pages ****
-st.sidebar.markdown("Sidebar Prompts:")
+# -------------------------------------------------------------
+# SIDEBAR (shared across all pages)
+# -------------------------------------------------------------
+with st.sidebar:
+    st.header("About this app")
+    st.markdown(
+        "Explore **ESG metrics** and their relationship to earnings manipulation.\n\n"
+        "Use the **navigation bar** above to switch pages."
+    )
 
-
-# **** Execute the navigation code ****
+# -------------------------------------------------------------
+# RUN SELECTED PAGE
+# -------------------------------------------------------------
 pg.run()
