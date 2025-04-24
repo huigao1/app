@@ -4,17 +4,14 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 @st.cache_data(show_spinner=False)
-def load_data(path="esg_cleaned_final.csv"):
-    return pd.read_csv(path)
+def load_data(path="esg_cleaned_final.csv.zip"):
+    return pd.read_csv(path, compression="zip")
 
 df = load_data()
 
 st.title("🔍 Exploratory Data Analysis")
-
 st.subheader("Summary Statistics (Key Metrics)")
-cols = [
-    'ESG_Combined_Score', 'ROA', 'ROE', 'Net_Profit_Margin', 'Total_Return'
-]
+cols = ['ESG_Combined_Score', 'ROA', 'ROE', 'Net_Profit_Margin', 'Total_Return']
 st.dataframe(df[cols].describe())
 
 st.subheader("Distribution of ESG Combined Score")
