@@ -10,8 +10,8 @@ from xgboost import XGBRegressor
 from sklearn.metrics import r2_score, mean_absolute_error
 
 @st.cache_data(show_spinner=False)
-def load_data(path="esg_cleaned_final.csv"):
-    return pd.read_csv(path)
+def load_data(path="esg_cleaned_final.csv.zip"):
+    return pd.read_csv(path, compression="zip")
 
 df = load_data()
 
@@ -23,8 +23,8 @@ features = [
     'ESG_Controversies_Score', 'CapEx_Intensity', 'Debt_Ratio', 'Log_Assets',
     'Revenues_Total', 'Operating_Income_Before_Depreciation', 'Asset_Turnover'
 ]
-
 target = 'EBITDA_Margin'
+
 model_df = df[features + [target]].dropna()
 X, y = model_df[features], model_df[target]
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
