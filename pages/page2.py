@@ -1,11 +1,18 @@
 import streamlit as st
 import pandas as pd
+import matplotlib.pyplot as plt
 
-st.title("Page 2: Stock Price Statistics")
+@st.cache_data(show_spinner=False)
+def load_data(path="esg_cleaned_final.csv"):
+    return pd.read_csv(path)
 
+df = load_data()
 
-if 'data' in st.session_state:
-   st.write("Statistics of the DataFrame:")
-   st.write(st.session_state.data.describe())
-else:
-   st.write("No stock data found. Please select stock on Main Page.")
+st.title("🏭 Average ESG by Industry Division")
+
+industry_esg = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
+
+fig, ax = plt.subplots(figsize=(8, 6))
+industry_esg.plot(kind='barh', ax=ax)
+ax.set_xlabel('Average ESG Combined Score')
+st.pyplot(fig)
