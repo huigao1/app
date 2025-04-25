@@ -15,8 +15,7 @@ App_page_7 = st.Page("pages/model.py",    title="Model Training",    icon="🤖"
 pg = st.navigation({
     "Start":  [App_page_0],
     "EDA":    [App_page_1, App_page_2, App_page_3, App_page_4],
-    "ML":     [App_page_5, App_page_6, App_page_7],
-    "Docs":   [App_page_8],
+    "ML":     [App_page_5, App_page_6, App_page_7]
 })
 
 # -------------------------------------------------------------
