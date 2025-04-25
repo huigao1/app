@@ -4,8 +4,9 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 @st.cache_data(show_spinner=False)
-def load_data(path="esg_cleaned_final.csv.zip"):
-    return pd.read_csv(path, compression="zip")
+from utils import load_esg_zip
+def load_data():
+    return load_esg_zip()          # 默认读取根目录 zip
 
 df = load_data()
 
