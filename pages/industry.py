@@ -1,19 +1,18 @@
-import streamlit as st
-import pandas as pd
-import matplotlib.pyplot as plt
-
+import streamlit as st, matplotlib.pyplot as plt
 from utils import load_esg_zip
+df = load_esg_zip()
 
-@st.cache_data(show_spinner=False)
-def load_data():
-    return load_esg_zip()          # 默认读取根目录 zip
+st.title("🏭 Industry ESG Overview")
+ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
 
-df = load_data()
-
-st.title("🏭 Average ESG by Industry Division")
-
-industry_esg = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
-fig, ax = plt.subplots(figsize=(8, 6))
-industry_esg.plot(kind='barh', ax=ax)
-ax.set_xlabel('Average ESG Combined Score')
-st.pyplot(fig)
+c1, c2 = st.columns([2,1])
+with c1:
+    fig, ax = plt.subplots(figsize=(6,8))
+    ind.plot(kind="barh", ax=ax)
+    ax.set_xlabel("Average ESG")
+    st.pyplot(fig)
+with c2:
+    st.write("#### 🔝 Top 5")
+    st.dataframe(ind.tail(5).to_frame("ESG"))
+    st.write("#### 🔻 Bottom 5")
+    st.dataframe(ind.head(5).to_frame("ESG"))
