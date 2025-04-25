@@ -2,15 +2,22 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+from utils import load_esg_zip          # ← 先导入工具函数
 
+# ------------------------------------------------------------------
+# Data loader (cached)
+# ------------------------------------------------------------------
 @st.cache_data(show_spinner=False)
-from utils import load_esg_zip
 def load_data():
-    return load_esg_zip()          # 默认读取根目录 zip
+    return load_esg_zip()               # 默认读取根目录 zip
 
 df = load_data()
 
+# ------------------------------------------------------------------
+# Page content
+# ------------------------------------------------------------------
 st.title("🔍 Exploratory Data Analysis")
+
 st.subheader("Summary Statistics (Key Metrics)")
 cols = ['ESG_Combined_Score', 'ROA', 'ROE', 'Net_Profit_Margin', 'Total_Return']
 st.dataframe(df[cols].describe())
