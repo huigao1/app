@@ -15,9 +15,22 @@ import numpy as np
 import joblib
 import matplotlib.pyplot as plt
 
-# 📥 Load model
-ebitda_model = joblib.load('ebitda_margin_model.pkl')
+import joblib
+from pathlib import Path
 
+# Try repo root first, then same dir as this file
+candidates = [
+    Path(__file__).resolve().parent.parent / 'ebitda_margin_model.pkl',
+    Path(__file__).resolve().with_name('ebitda_margin_model.pkl')
+]
+
+for p in candidates:
+    if p.exists():
+        ebitda_model = joblib.load(p)
+        break
+else:
+    raise FileNotFoundError("❌ Model file `ebitda_margin_model.pkl` not found. "
+                            "Place it in repo root or pages/ and push again.")
 # 🏷️ App Title
 st.title("📈 ESG Risk What-If Analysis on EBITDA Margin")
 
