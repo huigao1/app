@@ -5,6 +5,7 @@ df = load_esg_zip()
 st.title("🏭 Industry ESG Overview")
 ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
 
+
 c1, c2 = st.columns([2,1])
 with c1:
     fig, ax = plt.subplots(figsize=(6,8))
