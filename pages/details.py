@@ -36,30 +36,3 @@ with st.expander("📊 Model Pipeline"):
     *Target predicted on main **Model Training** page: **EBITDA_Margin***
     """)
 
-# ------------------------------------------------------------------
-# 3. Sample calculation table
-# ------------------------------------------------------------------
-@st.cache_data(show_spinner=False)
-def sample_row():
-    df = load_esg_zip()
-    # pick first non‑null row with all fields
-    req = ['Capital_Expenditures','Revenues_Total','Liabilities_Total','Assets_Total',
-           'Net_Income','Common_Equity_Total','Price']
-    row = df.dropna(subset=req).iloc[0]
-    return row
-
-row = sample_row()
-calc = {
-    'CapEx_Intensity': row['Capital_Expenditures']/row['Revenues_Total'],
-    'Debt_Ratio': row['Liabilities_Total']/row['Assets_Total'],
-    'Log_Assets': np.log(row['Assets_Total']),
-    'ROA': row['Net_Income']/row['Assets_Total'],
-    'ROE': row['Net_Income']/row['Common_Equity_Total'],
-    'Net_Profit_Margin': row['Net_Income']/row['Revenues_Total'],
-}
-calc_df = pd.DataFrame(calc, index=[row['ticker']])
-
-st.subheader("Example Ratio Calculation (single firm-year)")
-st.dataframe(calc_df.style.format("{:.3f}"))
-
-st.info("These ratios are recalculated on‑the‑fly during modeling and EDA pages.")
