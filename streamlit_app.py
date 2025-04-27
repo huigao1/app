@@ -11,13 +11,12 @@ App_page_4 = st.Page("pages/pairplot.py", title="Scatter Matrix",    icon="🔀"
 App_page_5 = st.Page("pages/linear_playground.py", title="Regression Playground", icon="📈")
 App_page_6 = st.Page("pages/clustering.py", title="Clustering (K-Means)", icon="🧩")
 App_page_7 = st.Page("pages/model.py",    title="Model Training",    icon="🤖")
-App_page_8 = st.Page("pages/about.py",    title="About & Docs",     icon="📄")
+
 
 pg = st.navigation({
     "Start":  [App_page_0],
     "EDA":    [App_page_1, App_page_2, App_page_3, App_page_4],
     "ML":     [App_page_5, App_page_6, App_page_7],
-    "Docs":   [App_page_8],
 })
 
 with st.sidebar:
