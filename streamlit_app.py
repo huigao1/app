@@ -11,7 +11,7 @@ App_page_trend  = st.Page("pages/trends.py",             title="Time-Series Tren
 App_page_reg    = st.Page("pages/linear_playground.py",  title="Regression Playground",icon="📈")
 App_page_cluster= st.Page("pages/clustering.py",         title="Clustering (K-Means)", icon="🧩")
 App_page_detail = st.Page("pages/details.py",            title="Model & Ratios",       icon="📝")
-App_page_predict = st.Page("pages/predict.py",            title="Predict by Ticker",     icon="🎯")
+App_page_predict = st.Page("pages/app_py.py",            title="Predict by Ticker",     icon="🎯")
 
 pg = st.navigation({
     "Start":  [App_page_intro, App_page_main],
