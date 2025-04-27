@@ -23,18 +23,24 @@ with st.expander("🔎 Why This Matters", expanded=True):
 """)
 
 # ---------------- Key Definitions ----------------
-with st.expander("📚 Key Definitions"):
+with st.expander("📚 Key Formulas & Definitions", expanded=True):
     st.markdown("""
+| Metric | Formula | Insight |
+|--------|---------|---------|
+| **EBITDA Margin** | `EBITDA / Revenue` | Strips away capital structure & accounting charges; enables cross‑company comparison. |
+| **Operating Margin** | `Operating Income / Revenue` | Shows core efficiency after operating costs and depreciation. |
+
 <details>
-<summary><strong>EBITDA Margin</strong></summary>
-EBITDA ÷ Revenue — measures operating performance before interest, taxes, depreciation & amortization.
+<summary><strong>EBITDA</strong></summary>
+**E**arnings **B**efore **I**nterest, **T**axes, **D**epreciation & **A**mortization – cash‑flow proxy.
 </details>
 
 <details>
-<summary><strong>Operating Margin</strong></summary>
-Operating Income ÷ Revenue — percentage of revenue left after covering operating expenses (incl. D&A).
+<summary><strong>Operating Income</strong></summary>
+Also called **EBIT** – profit after operating expenses but before interest & tax.
 </details>
 """, unsafe_allow_html=True)
+
 
 # ---------------- ESG Pillars ----------------
 with st.expander("🌿 ESG Pillars & Key Sub‑Scores", expanded=False):
