@@ -14,7 +14,7 @@ import pandas as pd
 import joblib
 
 # 📥 Load Models (Uncomment these after uploading your models into the same folder)
-# operating_model = joblib.load('operating_margin_model.pkl')
+operating_model = joblib.load('operating_margin_model.pkl')
 ebitda_model = joblib.load('ebitda_margin_model.pkl')
 
 # 🏷️ Title
