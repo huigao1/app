@@ -1,50 +1,65 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
 from utils import load_esg_zip
 
-st.title("📝 Model & Ratio Definitions")
+st.title("📝 Model Pipeline & Ratio Definitions")
 
-st.markdown("""
-### 1. Target Variable
-| Symbol | Definition |
-|--------|------------|
-| **EBITDA_Margin** | EBITDA / Revenues_Total |
+# ------------------------------------------------------------------
+# 1. Ratio dictionary
+# ------------------------------------------------------------------
+ratio_info = pd.DataFrame([
+    ["CapEx_Intensity", "Capital_Expenditures / Revenues_Total", "Asset‑intensity"],
+    ["Debt_Ratio", "Liabilities_Total / Assets_Total", "Balance‑sheet leverage"],
+    ["Log_Assets", "ln(Assets_Total)", "Firm size"],
+    ["Asset_Turnover", "Revenues_Total / Assets_Total", "Efficiency"],
+    ["ROA", "Net_Income / Assets_Total", "Return on assets"],
+    ["ROE", "Net_Income / Common_Equity_Total", "Return on equity"],
+    ["Net_Profit_Margin", "Net_Income / Revenues_Total", "Income share of sales"],
+    ["Total_Return", "(Price_t − Price_{t−1}) / Price_{t−1}", "Annual stock return"],
+], columns=["Ratio", "Formula", "Intuition"]).set_index("Ratio")
 
-### 2. Feature Ratios
-| Ratio | Formula | Intuition |
-|-------|---------|-----------|
-| **CapEx_Intensity** | Capital_Expenditures / Revenues_Total | How asset‑heavy the firm is |
-| **Debt_Ratio** | Liabilities_Total / Assets_Total | Balance‑sheet leverage |
-| **Log_Assets** | log(Assets_Total) | Firm size (scaled) |
-| **Asset_Turnover** | Revenues_Total / Assets_Total | Efficiency of asset usage |
-| **Market_Cap** | Price × Common_Equity_Total | Equity market valuation |
-| **Earnings_Yield** | EPS_Basic / Price | Earnings relative to price |
+st.subheader("Key Features & Targets")
+st.dataframe(ratio_info)
 
----
-### 3. Model Pipeline
-```text
-Input features (13) ─▶ StandardScaler ─▶
-   └─ LinearRegression
-   └─ RandomForestRegressor (n=300)
-   └─ XGBRegressor (n=300)
-```
-Models are benchmarked by **Adjusted R²** and **MAE** on a 20% hold‑out test set.
+# ------------------------------------------------------------------
+# 2. Model overview diagram
+# ------------------------------------------------------------------
+with st.expander("📊 Model Pipeline"):
+    st.markdown("""
+    ```
+    ESG & Financial Features ─▶ StandardScaler ─▶
+       ├─ LinearRegression
+       ├─ RandomForestRegressor (n=300)
+       └─ XGBRegressor (n=300)
+    ```
+    *Target predicted on main **Model Training** page: **EBITDA_Margin***
+    """)
 
----
-### 4. Sample Calculation
-""")
+# ------------------------------------------------------------------
+# 3. Sample calculation table
+# ------------------------------------------------------------------
+@st.cache_data(show_spinner=False)
+def sample_row():
+    df = load_esg_zip()
+    # pick first non‑null row with all fields
+    req = ['Capital_Expenditures','Revenues_Total','Liabilities_Total','Assets_Total',
+           'Net_Income','Common_Equity_Total','Price']
+    row = df.dropna(subset=req).iloc[0]
+    return row
 
-# Load one sample row for demo
-df = load_esg_zip().dropna(subset=['Capital_Expenditures','Revenues_Total','Liabilities_Total','Assets_Total']).head(1).copy()
-row = df.iloc[0]
+row = sample_row()
 calc = {
     'CapEx_Intensity': row['Capital_Expenditures']/row['Revenues_Total'],
     'Debt_Ratio': row['Liabilities_Total']/row['Assets_Total'],
-    'Log_Assets': row['Assets_Total'].__float__(),
+    'Log_Assets': np.log(row['Assets_Total']),
+    'ROA': row['Net_Income']/row['Assets_Total'],
+    'ROE': row['Net_Income']/row['Common_Equity_Total'],
+    'Net_Profit_Margin': row['Net_Income']/row['Revenues_Total'],
 }
 calc_df = pd.DataFrame(calc, index=[row['ticker']])
-calc_df['Log_Assets'] = calc_df['Log_Assets'].apply(lambda x: pd.np.log(x))
 
+st.subheader("Example Ratio Calculation (single firm-year)")
 st.dataframe(calc_df.style.format("{:.3f}"))
 
-st.info("All ratios are recomputed in real time during model training (see **Model Training** page).")
+st.info("These ratios are recalculated on‑the‑fly during modeling and EDA pages.")
