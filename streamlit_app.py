@@ -3,20 +3,20 @@ st.set_page_config(page_title="ESG Analytics Suite", page_icon="💹", layout="w
 
 # 页面注册
 
-App_page_0 = st.Page("pages/main.py",     title="Dataset Overview",  icon="ℹ️", default=True)
-App_page_1 = st.Page("pages/eda.py",      title="Exploratory Analysis", icon="🔍")
-App_page_2 = st.Page("pages/industry.py", title="Industry ESG",      icon="🏭")
-App_page_3 = st.Page("pages/trends.py",   title="Time-Series Trends", icon="⏳")
-App_page_4 = st.Page("pages/pairplot.py", title="Scatter Matrix",    icon="🔀")
-App_page_5 = st.Page("pages/linear_playground.py", title="Regression Playground", icon="📈")
-App_page_6 = st.Page("pages/clustering.py", title="Clustering (K-Means)", icon="🧩")
-App_page_7 = st.Page("pages/model.py",    title="Model Training",    icon="🤖")
-
+App_page_intro  = st.Page("pages/intro.py",              title="Welcome",              icon="🏠", default=True)
+App_page_main   = st.Page("pages/main.py",               title="Dataset Overview",     icon="ℹ️")
+App_page_eda    = st.Page("pages/eda.py",                title="Exploratory Analysis", icon="🔍")
+App_page_ind    = st.Page("pages/industry.py",           title="Industry ESG",         icon="🏭")
+App_page_trend  = st.Page("pages/trends.py",             title="Time-Series Trends",   icon="⏳")
+App_page_pair   = st.Page("pages/pairplot.py",           title="Scatter Matrix",       icon="🔀")
+App_page_reg    = st.Page("pages/linear_playground.py",  title="Regression Playground",icon="📈")
+App_page_cluster= st.Page("pages/clustering.py",         title="Clustering (K-Means)", icon="🧩")
+App_page_model  = st.Page("pages/model.py",              title="Model Training",       icon="🤖")
 
 pg = st.navigation({
-    "Start":  [App_page_0],
-    "EDA":    [App_page_1, App_page_2, App_page_3, App_page_4],
-    "ML":     [App_page_5, App_page_6, App_page_7],
+    "Start":  [App_page_intro, App_page_main],
+    "EDA":    [App_page_eda, App_page_ind, App_page_trend, App_page_pair],
+    "ML":     [App_page_reg, App_page_cluster, App_page_model],
 })
 
 with st.sidebar:
