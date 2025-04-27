@@ -16,7 +16,7 @@ import joblib
 import matplotlib.pyplot as plt
 
 # 📥 Load model
-ebitda_model = joblib.load('ebitda_margin_predictor.pkl')
+ebitda_model = joblib.load('ebitda_margin_model.pkl')
 
 # 🏷️ App Title
 st.title("📈 ESG Risk What-If Analysis on EBITDA Margin")
