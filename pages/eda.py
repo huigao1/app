@@ -35,7 +35,7 @@ sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2
 st.pyplot(fig2)
 
 # ---------------- Yearly correlation -----------
-with st.expander("📈 Yearly Correlation: ESG Combined vs Total Return"):
+with st.subheader("📈 Yearly Correlation: ESG Combined vs Total Return"):
     corr = (df.dropna(subset=['ESG_Combined_Score','Total_Return'])
               .groupby('year')
               .apply(lambda g: g['ESG_Combined_Score'].corr(g['Total_Return'])))
