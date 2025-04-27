@@ -6,8 +6,6 @@ from utils import load_esg_zip
 # Hero / Landing
 # -------------------------------------------------------------
 
-st.set_page_config(page_title="Corporate Margin Predictor", page_icon="📊", layout="wide")
-
 st.title("🔍 Forecasting Profitability with Financial & ESG Signals")
 
 st.markdown("""
