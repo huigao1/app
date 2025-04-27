@@ -10,21 +10,7 @@ def load_data():
 
 df = load_data()
 
-st.title("⏳ ESG Trend Over Time")
-
-esg_trend = df.groupby('year')['ESG_Combined_Score'].mean()
-fig, ax = plt.subplots()
-esg_trend.plot(marker='o', ax=ax)
-ax.set_xlabel('Year')
-ax.set_ylabel('Average ESG Combined Score')
-ax.set_title('Average ESG Combined Score Over Time')
-ax.grid(True)
-st.pyplot(fig)
-
-import streamlit as st
-import matplotlib.pyplot as plt
 import seaborn as sns
-
 
 # Sidebar filters
 years = sorted(df['year'].unique())
