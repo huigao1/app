@@ -13,15 +13,18 @@ st.title("🔍 Exploratory Data Analysis")
 
 # ---------------- Summary stats ----------------
 st.subheader("Summary Statistics (Key Metrics)")
-cols = ['ESG_Combined_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
+cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
+        'ESG_Governance_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
 st.dataframe(df[cols].describe())
 
-# ---------------- Distribution -----------------
-st.subheader("Distribution of ESG Combined Score")
-fig, ax = plt.subplots()
-sns.histplot(df['ESG_Combined_Score'].dropna(), kde=True, ax=ax)
-ax.set_title('Distribution of ESG Combined Score')
-st.pyplot(fig)
+# ---------------- Distributions ----------------
+plot_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score','ESG_Governance_Score']
+for col in plot_cols:
+    st.subheader(f"Distribution of {col}")
+    fig, ax = plt.subplots()
+    sns.histplot(df[col].dropna(), kde=True, ax=ax)
+    ax.set_title(f'Distribution of {col}')
+    st.pyplot(fig)
 
 # ---------------- Correlation heatmap ----------
 st.subheader("Correlation Heatmap (ESG & Financial Metrics)")
