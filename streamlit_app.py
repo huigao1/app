@@ -13,10 +13,11 @@ App_page_cluster= st.Page("pages/clustering.py",         title="Clustering (K-Me
 App_page_model  = st.Page("pages/model.py",              title="Model Training",       icon="🤖")
 App_page_detail = st.Page("pages/details.py",            title="Model & Ratios",       icon="📝")
 # App_page_predict = st.Page("pages/predict.py",            title="Predict by Ticker",   icon="🎯")
+App_page_app = st.Page("pages/app_py.py",            title="Predict by Ticker",   icon="🎯")
 pg = st.navigation({
     "Start":  [App_page_intro, App_page_main],
     "EDA":    [App_page_eda, App_page_ind, App_page_trend],
-    "ML":     [App_page_reg, App_page_cluster, App_page_detail, App_page_model],
+    "ML":     [App_page_reg, App_page_cluster, App_page_detail, App_page_model, App_page_app],
 })
 
 with st.sidebar:
