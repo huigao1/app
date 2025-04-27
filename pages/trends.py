@@ -24,7 +24,7 @@ df_win = df.loc[mask]
 # ------------------------------------------------------------------
 # Metric trend lines (multi‑select + rolling average)
 # ------------------------------------------------------------------
-metrics_avail = ['ESG_Combined_Score','Total_Return','Market_Cap']
+metrics_avail = ['ESG_Combined_Score','Total_Return']
 sel_metrics = st.multiselect("Select metrics to plot", metrics_avail, default=['ESG_Combined_Score'])
 window = st.slider("Rolling average window (years)", 1, 5, 1)
 
