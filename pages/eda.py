@@ -11,24 +11,35 @@ df = load_data()
 
 st.title("🔍 Exploratory Data Analysis")
 
-# Summary statistics
+# ---------------- Summary stats ----------------
 st.subheader("Summary Statistics (Key Metrics)")
-cols = ['ESG_Combined_Score', 'ROA', 'ROE', 'Net_Profit_Margin', 'Total_Return']
+cols = ['ESG_Combined_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
 st.dataframe(df[cols].describe())
 
-# Distribution
+# ---------------- Distribution -----------------
 st.subheader("Distribution of ESG Combined Score")
 fig, ax = plt.subplots()
 sns.histplot(df['ESG_Combined_Score'].dropna(), kde=True, ax=ax)
 ax.set_title('Distribution of ESG Combined Score')
 st.pyplot(fig)
 
-# Correlation heatmap
+# ---------------- Correlation heatmap ----------
 st.subheader("Correlation Heatmap (ESG & Financial Metrics)")
-heat_cols = [
-    'ESG_Combined_Score', 'ESG_Environmental_Score', 'ESG_Social_Score',
-    'ESG_Governance_Score', 'ROA', 'ROE', 'Total_Return', 'Debt_Ratio'
-]
-fig2, ax2 = plt.subplots(figsize=(10, 6))
+heat_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
+             'ESG_Governance_Score','ROA','ROE','Total_Return','Debt_Ratio']
+fig2, ax2 = plt.subplots(figsize=(10,6))
 sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2)
 st.pyplot(fig2)
+
+# ---------------- Yearly correlation -----------
+with st.expander("📈 Yearly Correlation: ESG Combined vs Total Return"):
+    corr = (df.dropna(subset=['ESG_Combined_Score','Total_Return'])
+              .groupby('year')
+              .apply(lambda g: g['ESG_Combined_Score'].corr(g['Total_Return'])))
+    fig3, ax3 = plt.subplots(figsize=(8,4))
+    ax3.plot(corr.index, corr.values, marker='o')
+    ax3.axhline(0, color='gray', linewidth=.8)
+    ax3.set_title('Yearly Correlation: ESG Combined vs Total Return')
+    ax3.set_xlabel('Year'); ax3.set_ylabel('Pearson r'); ax3.grid(alpha=.3)
+    st.pyplot(fig3)
+    st.dataframe(corr.rename('Correlation').reset_index())
