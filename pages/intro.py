@@ -53,3 +53,5 @@ df = load_data()
 
 st.subheader("📄 Dataset Preview")
 st.dataframe(df.head())
+
+st.markdown("---\n*Tip: use the navigation bar above to explore EDA or modeling pages.*")
