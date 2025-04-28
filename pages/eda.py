@@ -11,13 +11,13 @@ df = load_data()
 
 st.title("🔍 Exploratory Data Analysis")
 
-# ---------------- Summary stats ----------------
+st.subheader("The Colab Notebook can be found here:")
+
 st.subheader("Summary Statistics (Key Metrics)")
 cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
         'ESG_Governance_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
 st.dataframe(df[cols].describe())
 
-# ---------------- Distributions ----------------
 plot_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score','ESG_Governance_Score']
 for col in plot_cols:
     st.subheader(f"Distribution of {col}")
@@ -26,7 +26,6 @@ for col in plot_cols:
     ax.set_title(f'Distribution of {col}')
     st.pyplot(fig)
 
-# ---------------- Correlation heatmap ----------
 st.subheader("Correlation Heatmap (ESG & Financial Metrics)")
 heat_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
              'ESG_Governance_Score','ROA','ROE','Total_Return','Debt_Ratio']
@@ -34,7 +33,6 @@ fig2, ax2 = plt.subplots(figsize=(10,6))
 sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2)
 st.pyplot(fig2)
 
-# ---------------- Yearly correlation -----------
 with st.subheader("📈 Yearly Correlation: ESG Combined vs Total Return"):
     corr = (df.dropna(subset=['ESG_Combined_Score','Total_Return'])
               .groupby('year')
