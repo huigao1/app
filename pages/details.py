@@ -32,6 +32,6 @@ with st.expander("📊 Model Pipeline"):
        ├─ LinearRegression
        ├─ HistGradientBoostingRegressor
     ```
-    *Target predicted on main **Model Training** page: **EBITDA_Margin***
+    *Target predicted on main **Model Training** page: **EBITDA_Margin*** **Operating_Margin***
     """)
 
