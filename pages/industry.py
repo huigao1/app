@@ -1,5 +1,6 @@
 import streamlit as st
 import plotly.express as px
+import matplotlib.pyplot as plt
 from utils import load_esg_zip
 
 st.markdown("## 🏭 Industry-level ESG Dashboard")
