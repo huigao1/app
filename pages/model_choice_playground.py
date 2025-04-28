@@ -9,6 +9,14 @@ from utils import load_esg_zip
 
 st.title("⚙️ Model Playground – Linear vs HistGradientBoosting")
 
+st.markdown("""
+Choose between a **simple Linear Regression** or the tree‑based **HistGradientBoostingRegressor** to see how different algorithms fit the data.
+
+* **R²** – proportion of variance explained (closer to 1 ➜ better).
+* **MAE** – average absolute error (closer to 0 ➜ better).
+* For hist‑grad boosting you can tweak **n_estimators** (iterations), **learning_rate**, and **max_depth** to combat under/over‑fitting.
+""")
+
 df = load_esg_zip()
 num_cols = df.select_dtypes("number").columns.tolist()
 
