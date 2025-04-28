@@ -2,9 +2,6 @@ import streamlit as st
 import pandas as pd
 from utils import load_esg_zip
 
-# -------------------------------------------------------------
-# Hero / Landing
-# -------------------------------------------------------------
 st.title("🔍 Forecasting Profitability with Financial & ESG Signals")
 
 st.markdown("""
@@ -13,7 +10,6 @@ Welcome to the **Corporate Margin Predictor**, a proof-of-concept dashboard that
 1. **EBITDA Margin**  2. **Operating Margin**
 """)
 
-# ---------------- Why This Matters ----------------
 with st.expander("🔎 Why This Matters", expanded=True):
     st.markdown("""
 * **Investor Insight** – Quantify how changes in asset efficiency, leverage, and ESG performance translate into bottom-line profitability.  
@@ -21,7 +17,6 @@ with st.expander("🔎 Why This Matters", expanded=True):
 * **ESG Integration** – Bridge sustainability metrics with valuation to uncover mispriced stocks.
 """)
 
-# ---------------- Why these targets ----------------
 with st.expander("🎯 Why predict EBITDA & Operating Margins?", expanded=True):
     st.markdown("""
 | Metric | Why it matters |
@@ -32,7 +27,6 @@ with st.expander("🎯 Why predict EBITDA & Operating Margins?", expanded=True):
 > **Dual-margin view** = one lens for *valuation* (EBITDA) and one for *operational health* (Operating).
 """, unsafe_allow_html=True)
 
-# ---------------- Key Definitions ----------------
 with st.expander("📚 Key Formulas & Definitions", expanded=False):
     st.markdown("""
 | Metric | Formula | Insight |
@@ -51,7 +45,6 @@ Also called **EBIT** – profit after operating expenses but before interest & t
 </details>
 """, unsafe_allow_html=True)
 
-# ---------------- ESG Pillars ----------------
 with st.expander("🌿 ESG Pillars & Key Sub‑Scores", expanded=False):
     st.markdown("""
 | Pillar | Sub‑score | Dataset column | What it captures |
@@ -64,7 +57,6 @@ with st.expander("🌿 ESG Pillars & Key Sub‑Scores", expanded=False):
 | ‑ | Controversies | ESG_Controversies_Score | Litigation, scandals, regulatory fines |
 """)
 
-# ---------------- Next Steps ----------------
 with st.expander("🚀 Next Steps", expanded=True):
     st.markdown("""
 1. **Select a Year & Division** with sidebar filters in EDA pages.  
@@ -74,9 +66,6 @@ with st.expander("🚀 Next Steps", expanded=True):
 
 st.divider()
 
-# -------------------------------------------------------------
-# Dataset preview & download
-# -------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def load_data() -> pd.DataFrame:
     return load_esg_zip()
