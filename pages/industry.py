@@ -1,64 +1,74 @@
 import streamlit as st
 import pandas as pd
-import seaborn as sns
-import matplotlib.pyplot as plt
+import plotly.express as px
 from utils import load_esg_zip
 
-sns.set_style("whitegrid")
+st.markdown("<h2>🏭 Industry‑level ESG Dashboard</h2>", unsafe_allow_html=True)
 
 df = load_esg_zip()
 
-st.markdown("<h2>🏭 Industry‑level ESG Overview</h2>", unsafe_allow_html=True)
+# -------------------------------------------------------------
+# Bar — Average ESG by Division (interactive Plotly)
+# -------------------------------------------------------------
 
-# ------------------------------------------------------------------
-# Average ESG by Division – full barh chart
-# ------------------------------------------------------------------
-ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
+div_avg = (
+    df.groupby('Division')['ESG_Combined_Score']
+      .mean()
+      .round(2)
+      .sort_values()
+      .reset_index()
+)
+
+bar_fig = px.bar(
+    div_avg,
+    x='ESG_Combined_Score',
+    y='Division',
+    orientation='h',
+    text='ESG_Combined_Score',
+    color='ESG_Combined_Score',
+    color_continuous_scale='Blues',
+    labels={'ESG_Combined_Score':'Average ESG'},
+    height=max(400, 25*len(div_avg)),
+)
+bar_fig.update_layout(coloraxis_showscale=False, margin=dict(l=120, r=10, t=30, b=30))
+bar_fig.update_traces(texttemplate='%{text:.2f}', textposition='outside')
 
 st.subheader("Average ESG Combined Score by Division")
-bar_height = max(4, min(len(ind)*0.3, 20))  # dynamic height
-fig, ax = plt.subplots(figsize=(8, bar_height))
-ind.plot(kind="barh", ax=ax, color="#1f77b4")
-ax.set_xlabel("Average ESG Score (0‑100)")
-ax.bar_label(ax.containers[0], fmt="{:.1f}", padding=3)
-plt.tight_layout()
-st.pyplot(fig)
+st.plotly_chart(bar_fig, use_container_width=True)
 
-# Top / Bottom tables
 col1, col2 = st.columns(2)
 with col1:
-    st.markdown("#### 🔝 Top 5 Divisions")
-    st.dataframe(ind.tail(5).to_frame("Avg ESG").style.format("{:.2f}"))
+    st.markdown("#### 🔝 Top 5 Divisions")
+    st.table(div_avg.tail(5).iloc[::-1].set_index('Division'))
 with col2:
-    st.markdown("#### 🔻 Bottom 5 Divisions")
-    st.dataframe(ind.head(5).to_frame("Avg ESG").style.format("{:.2f}"))
+    st.markdown("#### 🔻 Bottom 5 Divisions")
+    st.table(div_avg.head(5).set_index('Division'))
 
-st.divider()
+# -------------------------------------------------------------
+# Line — ESG Trend over Time for Selected Divisions
+# -------------------------------------------------------------
 
-# ------------------------------------------------------------------
-# ESG trend over time (selectable divisions)
-# ------------------------------------------------------------------
-st.subheader("📈 ESG Combined Score Trend over Time")
-all_divs = ind.index.tolist()
-default_divs = ind.tail(5).index.tolist()  # default top‑5
-sel_divs = st.multiselect("Choose divisions to plot", all_divs, default=default_divs)
+st.markdown("---")
+st.subheader("📈 ESG Trend Over Time")
+all_divs   = div_avg['Division'].tolist()
+default_sel = div_avg.tail(5)['Division'].tolist()
+sel_divs = st.multiselect("Select divisions", all_divs, default=default_sel)
 
 if sel_divs:
     trend = (
         df[df['Division'].isin(sel_divs)]
-        .groupby(['year','Division'])['ESG_Combined_Score']
-        .mean()
-        .unstack()
-        .dropna(how='all')
+          .groupby(['year','Division'])['ESG_Combined_Score']
+          .mean()
+          .reset_index()
     )
-    fig2, ax2 = plt.subplots(figsize=(10,5))
-    trend.plot(ax=ax2, marker='o')
-    ax2.set_ylabel('Average ESG Score')
-    ax2.set_xlabel('Year')
-    ax2.set_ylim(0, 100)
-    ax2.legend(title='Division', bbox_to_anchor=(1.02,1), loc='upper left')
-    ax2.set_title('ESG Trend by Selected Divisions')
-    plt.tight_layout()
-    st.pyplot(fig2)
+    line_fig = px.line(
+        trend,
+        x='year', y='ESG_Combined_Score', color='Division',
+        markers=True,
+        labels={'ESG_Combined_Score':'Average ESG'},
+        height=450,
+    )
+    line_fig.update_yaxes(range=[0,100])
+    st.plotly_chart(line_fig, use_container_width=True)
 else:
-    st.info("Select at least one division to display the time‑series plot.")
+    st.info("Select at least one division to show trend lines.")
