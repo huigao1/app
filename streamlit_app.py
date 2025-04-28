@@ -15,7 +15,7 @@ App_page_predict = st.Page("pages/app.py",            title="Predict by Ticker",
 pg = st.navigation({
     "Start":  [App_page_intro],
     "EDA":    [App_page_eda, App_page_ind, App_page_trend],
-    "ML":     [App_page_reg, App_page_cluster, App_page_detail, App_page_predict],
+    "ML":     [App_page_cluster, App_page_detail, App_page_reg, App_page_predict],
 })
 
 with st.sidebar:
