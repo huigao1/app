@@ -2,77 +2,101 @@ import streamlit as st
 import pandas as pd
 from utils import load_esg_zip
 
-st.title("🔍 Forecasting Profitability with Financial & ESG Signals")
+# -------------------------------------------------------------
+# Title
+# -------------------------------------------------------------
+st.markdown(
+    "<h2 style='color:#d62728'>🔍 Corporate Margin Predictor</h2>"
+    "<h4>Forecasting Profitability with Financial &amp; ESG Signals</h4>",
+    unsafe_allow_html=True,
+)
 
-st.markdown("""
-Welcome to the **Corporate Margin Predictor**, a proof-of-concept dashboard that blends core **financial ratios** with **ESG (Environmental, Social, Governance)** scores to estimate two critical profitability measures:
+# -------------------------------------------------------------
+# Why this dashboard
+# -------------------------------------------------------------
+st.markdown("### 🔎 Why This Matters")
+st.markdown(
+    """
+- **Investor Insight** · Link asset efficiency, leverage & ESG to bottom-line margins  
+- **Strategic Planning** · Run *what-if* ESG scenarios (e.g.\ +5pts Environmental → Δ EBITDA)  
+- **Valuation Edge** · Bridge sustainability metrics with pricing to detect mis-valued stocks
+"""
+)
 
-1. **EBITDA Margin**  2. **Operating Margin**
-""")
+# -------------------------------------------------------------
+# Why these two targets
+# -------------------------------------------------------------
+st.markdown("### 🎯 Why Predict *EBITDA* & *Operating* Margins")
+st.markdown(
+    """
+| &nbsp;Metric&nbsp; | Why it matters |
+|-------------------|----------------|
+| **EBITDA Margin** | Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
+| **Operating Margin** | Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
+""",
+    unsafe_allow_html=True,
+)
 
-with st.expander("🔎 Why This Matters", expanded=True):
-    st.markdown("""
-* **Investor Insight** – Quantify how changes in asset efficiency, leverage, and ESG performance translate into bottom-line profitability.  
-* **Strategic Planning** – Run *what-if* scenarios—e.g., “If a firm boosts its Environmental Score by 5 points, how much could its EBITDA margin improve?”  
-* **ESG Integration** – Bridge sustainability metrics with valuation to uncover mispriced stocks.
-""")
+# -------------------------------------------------------------
+# Key formulas
+# -------------------------------------------------------------
+st.markdown("### 📚 Key Formulas")
+st.markdown(
+    """
+| Metric | Formula |
+|--------|---------|
+| **EBITDA Margin** | `EBITDA / Revenue` |
+| **Operating Margin** | `Operating Income / Revenue` |
 
-with st.expander("🎯 Why predict EBITDA & Operating Margins?", expanded=True):
-    st.markdown("""
-| Metric | Why it matters |
-|--------|----------------|
-| **EBITDA Margin** | • Removes capital-structure noise → comparable across firms.<br>• Anchors common valuation multiples (EV/EBITDA). |
-| **Operating Margin** | • Includes depreciation → reflects full cost discipline.<br>• Key input for DCF and a KPI tracked by management teams. |
+<small><strong>EBITDA</strong> = Earnings Before Interest · Taxes · Depreciation · Amortization.  
+<strong>Operating Income</strong> (EBIT) = profit after operating costs but before interest & tax.</small>
+""",
+    unsafe_allow_html=True,
+)
 
-> **Dual-margin view** = one lens for *valuation* (EBITDA) and one for *operational health* (Operating).
-""", unsafe_allow_html=True)
+# -------------------------------------------------------------
+# ESG pillars
+# -------------------------------------------------------------
+st.markdown("### 🌿 ESG Pillars at a Glance")
+st.markdown(
+    """
+| Pillar | Key Sub-score | Column | Captures |
+|--------|---------------|--------|----------|
+| **E** | Emissions | `ESG_Emissions_Score` | CO₂e footprint, reduction targets |
+|  | Environmental Overall | `ESG_Environmental_Score` | Resource use, waste, biodiversity |
+| **S** | Human Rights | `ESG_Human_Rights_Score` | Supplier labor standards |
+|  | Workforce | `ESG_Workforce_Score` | Diversity, safety, training |
+| **G** | Governance | `ESG_Governance_Score` | Board quality, exec pay, audit risk |
+| – | Controversies | `ESG_Controversies_Score` | Litigation, scandals, fines |
+""",
+    unsafe_allow_html=True,
+)
 
-with st.expander("📚 Key Formulas & Definitions", expanded=False):
-    st.markdown("""
-| Metric | Formula | Insight |
-|--------|---------|---------|
-| **EBITDA Margin** | EBITDA / Revenue | Enables cross-company comparison. |
-| **Operating Margin** | Operating Income / Revenue | Shows core efficiency after operating costs. |
+# -------------------------------------------------------------
+# Next steps
+# -------------------------------------------------------------
+st.markdown("### 🚀 Get Started")
+st.markdown(
+    """
+1. Use sidebar filters (year, division) on **EDA** pages  
+2. Check **Model Training** for feature importance & tuning  
+3. Try **Predict by Ticker** or **What-If Simulator** to stress ESG risk
+"""
+)
 
-<details>
-<summary><strong>EBITDA</strong></summary>
-**E**arnings **B**efore **I**nterest, **T**axes, **D**epreciation & **A**mortization – cash-flow proxy.
-</details>
+st.markdown("---")
 
-<details>
-<summary><strong>Operating Income</strong></summary>
-Also called **EBIT** – profit after operating expenses but before interest & tax.
-</details>
-""", unsafe_allow_html=True)
-
-with st.expander("🌿 ESG Pillars & Key Sub‑Scores", expanded=False):
-    st.markdown("""
-| Pillar | Sub‑score | Dataset column | What it captures |
-|--------|-----------|----------------|------------------|
-| **Environmental** | Emissions | ESG_Emissions_Score | CO₂e footprint, reduction initiatives |
-| | Environmental Overall | ESG_Environmental_Score | Resource use, waste, biodiversity |
-| **Social** | Human Rights | ESG_Human_Rights_Score | Supply‑chain labor standards |
-| | Workforce | ESG_Workforce_Score | Diversity, safety, training |
-| **Governance** | Governance Overall | ESG_Governance_Score | Board structure, pay, audit quality |
-| ‑ | Controversies | ESG_Controversies_Score | Litigation, scandals, regulatory fines |
-""")
-
-with st.expander("🚀 Next Steps", expanded=True):
-    st.markdown("""
-1. **Select a Year & Division** with sidebar filters in EDA pages.  
-2. **Explore Feature Importance** under *Model Training* to see which ratios and ESG pillars drive predictions.  
-3. **Predict Real Companies** on *Predict by Ticker* (AAPL, TSLA, etc.).
-""")
-
-st.divider()
-
+# -------------------------------------------------------------
+# Data preview
+# -------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def load_data() -> pd.DataFrame:
     return load_esg_zip()
+
 
 df = load_data()
 
 st.subheader("📄 Dataset Preview")
 st.dataframe(df.head())
 
-st.markdown("---\n*Use the **navigation bar** at the top to explore EDA or modeling pages.*")
+st.caption("Use the navigation bar at the top to explore · download · model.")
