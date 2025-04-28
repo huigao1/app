@@ -6,7 +6,7 @@ from utils import load_esg_zip
 # Hero / Landing ------------------------------------------------
 # -------------------------------------------------------------
 
-st.title("🔍 <span style='color:red'>WHAT?</span> Forecasting Profitability with Financial & ESG Signals", unsafe_allow_html=True)
+st.title("🔍 WHAT? Forecasting Profitability with Financial & ESG Signals")
 
 st.markdown("""
 Welcome to the **Corporate Margin Predictor**, a dashboard that blends core **financial ratios** with **ESG** scores to forecast two profitability metrics:
