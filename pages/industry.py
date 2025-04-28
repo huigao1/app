@@ -1,54 +1,64 @@
 import streamlit as st
-import matplotlib.pyplot as plt
+import pandas as pd
 import seaborn as sns
+import matplotlib.pyplot as plt
 from utils import load_esg_zip
 
-sns.set_theme(style="whitegrid")
+sns.set_style("whitegrid")
 
 df = load_esg_zip()
 
-st.markdown("<h2 style='margin-bottom:0.2em'>🏭 Industry‑level ESG Overview</h2>", unsafe_allow_html=True)
+st.markdown("<h2>🏭 Industry‑level ESG Overview</h2>", unsafe_allow_html=True)
 
-# --------------------------------------------------
-# Horizontal bar – average ESG per division
-# --------------------------------------------------
-avg_esg = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
+# ------------------------------------------------------------------
+# Average ESG by Division – full barh chart
+# ------------------------------------------------------------------
+ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
 
-c_bar, c_tbl = st.columns([3,1])
-with c_bar:
-    fig, ax = plt.subplots(figsize=(7,6))
-    sns.barplot(y=avg_esg.index, x=avg_esg.values, palette="viridis", ax=ax)
-    ax.set_xlabel("Average ESG Score"); ax.set_ylabel("")
-    ax.set_title("Mean ESG Combined by Division", loc="left")
-    st.pyplot(fig)
-with c_tbl:
-    st.markdown("#### 🔝 Top 5")
-    st.dataframe(avg_esg.tail(5).round(2).to_frame("ESG"))
-    st.markdown("#### 🔻 Bottom 5")
-    st.dataframe(avg_esg.head(5).round(2).to_frame("ESG"))
+st.subheader("Average ESG Combined Score by Division")
+bar_height = max(4, min(len(ind)*0.3, 20))  # dynamic height
+fig, ax = plt.subplots(figsize=(8, bar_height))
+ind.plot(kind="barh", ax=ax, color="#1f77b4")
+ax.set_xlabel("Average ESG Score (0‑100)")
+ax.bar_label(ax.containers[0], fmt="{:.1f}", padding=3)
+plt.tight_layout()
+st.pyplot(fig)
+
+# Top / Bottom tables
+col1, col2 = st.columns(2)
+with col1:
+    st.markdown("#### 🔝 Top 5 Divisions")
+    st.dataframe(ind.tail(5).to_frame("Avg ESG").style.format("{:.2f}"))
+with col2:
+    st.markdown("#### 🔻 Bottom 5 Divisions")
+    st.dataframe(ind.head(5).to_frame("Avg ESG").style.format("{:.2f}"))
 
 st.divider()
 
-# --------------------------------------------------
-# Time‑series trend per division
-# --------------------------------------------------
-st.markdown("### 📈 ESG Trends Across Years")
+# ------------------------------------------------------------------
+# ESG trend over time (selectable divisions)
+# ------------------------------------------------------------------
+st.subheader("📈 ESG Combined Score Trend over Time")
+all_divs = ind.index.tolist()
+default_divs = ind.tail(5).index.tolist()  # default top‑5
+sel_divs = st.multiselect("Choose divisions to plot", all_divs, default=default_divs)
 
-# optional filter – allow user to pick subset of divisions
-all_divs = avg_esg.index.tolist()
-sel_divs = st.multiselect("Select divisions to plot", all_divs, default=all_divs[:6])
-
-trend = (df[df['Division'].isin(sel_divs)]
-         .groupby(['year','Division'])['ESG_Combined_Score']
-         .mean()
-         .unstack())
-
-fig2, ax2 = plt.subplots(figsize=(10,5))
-trend.plot(ax=ax2, linewidth=2, marker='o')
-ax2.set_ylabel("Avg ESG Score"); ax2.set_xlabel("Year")
-ax2.set_title("ESG Combined Score Trends by Division")
-ax2.legend(loc='upper left', bbox_to_anchor=(1.02,1))
-ax2.grid(alpha=.3)
-st.pyplot(fig2)
-
-st.caption("Tip: deselect divisions to reduce clutter and focus on specific industries.")
+if sel_divs:
+    trend = (
+        df[df['Division'].isin(sel_divs)]
+        .groupby(['year','Division'])['ESG_Combined_Score']
+        .mean()
+        .unstack()
+        .dropna(how='all')
+    )
+    fig2, ax2 = plt.subplots(figsize=(10,5))
+    trend.plot(ax=ax2, marker='o')
+    ax2.set_ylabel('Average ESG Score')
+    ax2.set_xlabel('Year')
+    ax2.set_ylim(0, 100)
+    ax2.legend(title='Division', bbox_to_anchor=(1.02,1), loc='upper left')
+    ax2.set_title('ESG Trend by Selected Divisions')
+    plt.tight_layout()
+    st.pyplot(fig2)
+else:
+    st.info("Select at least one division to display the time‑series plot.")
