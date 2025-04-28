@@ -30,8 +30,7 @@ with st.expander("📊 Model Pipeline"):
     ```
     ESG & Financial Features ─▶ StandardScaler ─▶
        ├─ LinearRegression
-       ├─ RandomForestRegressor (n=300)
-       └─ XGBRegressor (n=300)
+       ├─ HistGradientBoostingRegressor
     ```
     *Target predicted on main **Model Training** page: **EBITDA_Margin***
     """)
