@@ -5,18 +5,12 @@ from utils import load_esg_zip
 
 sns.set_style("whitegrid")
 
-# -------------------------------------------------------------
-# Load data
-# -------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def load_data():
     return load_esg_zip()
 
 df = load_data()
 
-# -------------------------------------------------------------
-# Page title & KPI cards
-# -------------------------------------------------------------
 
 st.markdown("<h2 style='margin-bottom:0.2em'>🔍 ESG Exploratory Data Analysis</h2>", unsafe_allow_html=True)
 
@@ -27,18 +21,10 @@ c3.metric("Unique tickers", df['ticker_ann'].nunique())
 
 st.divider()
 
-# -------------------------------------------------------------
-# Summary stats table
-# -------------------------------------------------------------
-
 st.subheader("Summary Statistics (Key Metrics)")
 core_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
              'ESG_Governance_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
 st.dataframe(df[core_cols].describe().T.style.format("{:.2f}"))
-
-# -------------------------------------------------------------
-# Distributions in tabs
-# -------------------------------------------------------------
 
 plot_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score','ESG_Governance_Score']
 tabs = st.tabs([f"Dist • {c.split('_')[1]}" if c!='ESG_Combined_Score' else "Dist • Combined" for c in plot_cols])
@@ -49,10 +35,6 @@ for tab, col in zip(tabs, plot_cols):
         ax.set_title(col.replace('_',' '))
         st.pyplot(fig)
 
-# -------------------------------------------------------------
-# Correlation heatmap
-# -------------------------------------------------------------
-
 st.subheader("Correlation Matrix (ESG + Financial)")
 heat_cols = plot_cols + ['ROA','ROE','Total_Return','Debt_Ratio']
 fig2, ax2 = plt.subplots(figsize=(8,5))
@@ -60,10 +42,6 @@ mask = None
 sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2, mask=mask)
 ax2.set_title('Pearson correlations')
 st.pyplot(fig2)
-
-# -------------------------------------------------------------
-# Yearly correlation line
-# -------------------------------------------------------------
 
 st.subheader("Yearly ESG vs Total Return Correlation")
 corr = (
