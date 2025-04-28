@@ -25,7 +25,7 @@ st.dataframe(ratio_info)
 # ------------------------------------------------------------------
 # 2. Model overview diagram
 # ------------------------------------------------------------------
-with st.expander("📊 Model Pipeline"):
+with st.subheader("📊 Model Pipeline"):
     st.markdown("""
     ```
     ESG & Financial Features ─▶ StandardScaler ─▶
