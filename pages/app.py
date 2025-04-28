@@ -11,12 +11,30 @@ st.title("🧪 ESG Risk What‑If Simulator – EBITDA vs Operating Margin")
 # Helper: load model (search repo root then same dir)
 # -------------------------------------------------------------
 
-def load_model(fname: str):
-    for p in [Path(__file__).resolve().parent.parent / fname,
-              Path(__file__).resolve().with_name(fname)]:
-        if p.exists():
-            return joblib.load(p)
-    raise FileNotFoundError(f"Model file '{fname}' not found in repo.")
+import joblib
+from pathlib import Path
+
+# Try repo root first, then same dir as this file
+candidates = [
+    Path(__file__).resolve().parent.parent / 'ebitda_margin_model.pkl',
+    Path(__file__).resolve().with_name('ebitda_margin_model.pkl')
+]
+
+for p in candidates:
+    if p.exists():
+        ebitda_model = joblib.load(p)
+        break
+else:
+    raise FileNotFoundError("❌ Model file `ebitda_margin_model.pkl` not found. "
+                            "Place it in repo root or pages/ and push again.")
+
+def load_or_train_operating(df):
+    try:
+        return load_model('operating_margin_predictor.pkl')
+    except FileNotFoundError:
+        # 👉 训练代码，得到 model
+        joblib.dump(model, 'operating_margin_predictor.pkl')
+        return model
 
 ebitda_model   = load_model('ebitda_margin_model.pkl')
 operating_model = load_model('operating_margin_predictor.pkl')
