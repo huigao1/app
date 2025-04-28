@@ -5,11 +5,10 @@ from utils import load_esg_zip
 # -------------------------------------------------------------
 # Hero / Landing
 # -------------------------------------------------------------
-
 st.title("🔍 Forecasting Profitability with Financial & ESG Signals")
 
 st.markdown("""
-Welcome to the **Corporate Margin Predictor**, a proof‑of‑concept dashboard that blends core **financial ratios** with **ESG (Environmental, Social, Governance)** scores to estimate two critical profitability measures:
+Welcome to the **Corporate Margin Predictor**, a proof-of-concept dashboard that blends core **financial ratios** with **ESG (Environmental, Social, Governance)** scores to estimate two critical profitability measures:
 
 1. **EBITDA Margin**  2. **Operating Margin**
 """)
@@ -17,22 +16,33 @@ Welcome to the **Corporate Margin Predictor**, a proof‑of‑concept dashboard 
 # ---------------- Why This Matters ----------------
 with st.expander("🔎 Why This Matters", expanded=True):
     st.markdown("""
-* **Investor Insight** – Quantify how changes in asset efficiency, leverage, and ESG performance translate into bottom‑line profitability.  
-* **Strategic Planning** – Run *what‑if* scenarios—e.g., “If a firm boosts its Environmental Score by 5 points, how much could its EBITDA margin improve?”  
+* **Investor Insight** – Quantify how changes in asset efficiency, leverage, and ESG performance translate into bottom-line profitability.  
+* **Strategic Planning** – Run *what-if* scenarios—e.g., “If a firm boosts its Environmental Score by 5 points, how much could its EBITDA margin improve?”  
 * **ESG Integration** – Bridge sustainability metrics with valuation to uncover mispriced stocks.
 """)
 
+# ---------------- Why these targets ----------------
+with st.expander("🎯 Why predict EBITDA & Operating Margins?", expanded=True):
+    st.markdown("""
+| Metric | Why it matters |
+|--------|----------------|
+| **EBITDA Margin** | • Removes capital-structure noise → comparable across firms.<br>• Anchors common valuation multiples (EV/EBITDA). |
+| **Operating Margin** | • Includes depreciation → reflects full cost discipline.<br>• Key input for DCF and a KPI tracked by management teams. |
+
+> **Dual-margin view** = one lens for *valuation* (EBITDA) and one for *operational health* (Operating).
+""", unsafe_allow_html=True)
+
 # ---------------- Key Definitions ----------------
-with st.expander("📚 Key Formulas & Definitions", expanded=True):
+with st.expander("📚 Key Formulas & Definitions", expanded=False):
     st.markdown("""
 | Metric | Formula | Insight |
 |--------|---------|---------|
-| **EBITDA Margin** | EBITDA / Revenue | Strips away capital structure & accounting charges; enables cross‑company comparison. |
-| **Operating Margin** | Operating Income / Revenue | Shows core efficiency after operating costs and depreciation. |
+| **EBITDA Margin** | EBITDA / Revenue | Enables cross-company comparison. |
+| **Operating Margin** | Operating Income / Revenue | Shows core efficiency after operating costs. |
 
 <details>
 <summary><strong>EBITDA</strong></summary>
-**E**arnings **B**efore **I**nterest, **T**axes, **D**epreciation & **A**mortization – cash‑flow proxy.
+**E**arnings **B**efore **I**nterest, **T**axes, **D**epreciation & **A**mortization – cash-flow proxy.
 </details>
 
 <details>
@@ -42,16 +52,16 @@ Also called **EBIT** – profit after operating expenses but before interest & t
 """, unsafe_allow_html=True)
 
 # ---------------- ESG Pillars ----------------
-with st.expander("🌿 ESG Pillars & Key Sub‑Scores", expanded=False):
+with st.expander("🌿 ESG Pillars & Key Sub-Scores", expanded=False):
     st.markdown("""
-| Pillar | Sub‑score | Dataset column | What it captures |
+| Pillar | Sub-score | Dataset column | What it captures |
 |--------|-----------|----------------|------------------|
 | **Environmental** | Emissions | ESG_Emissions_Score | CO₂e footprint, reduction initiatives |
 | | Environmental Overall | ESG_Environmental_Score | Resource use, waste, biodiversity |
-| **Social** | Human Rights | ESG_Human_Rights_Score | Supply‑chain labor standards |
+| **Social** | Human Rights | ESG_Human_Rights_Score | Supply-chain labor standards |
 | | Workforce | ESG_Workforce_Score | Diversity, safety, training |
 | **Governance** | Governance Overall | ESG_Governance_Score | Board structure, pay, audit quality |
-| ‑ | Controversies | ESG_Controversies_Score | Litigation, scandals, regulatory fines |
+| - | Controversies | ESG_Controversies_Score | Litigation, scandals, regulatory fines |
 """)
 
 # ---------------- Next Steps ----------------
@@ -67,7 +77,6 @@ st.divider()
 # -------------------------------------------------------------
 # Dataset preview & download
 # -------------------------------------------------------------
-
 @st.cache_data(show_spinner=False)
 def load_data() -> pd.DataFrame:
     return load_esg_zip()
