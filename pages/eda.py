@@ -3,44 +3,79 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from utils import load_esg_zip
 
+sns.set_style("whitegrid")
+
+# -------------------------------------------------------------
+# Load data
+# -------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def load_data():
     return load_esg_zip()
 
 df = load_data()
 
-st.title("🔍 Exploratory Data Analysis")
+# -------------------------------------------------------------
+# Page title & KPI cards
+# -------------------------------------------------------------
 
-st.subheader("The Colab Notebook can be found here:")
+st.markdown("<h2 style='margin-bottom:0.2em'>🔍 ESG Exploratory Data Analysis</h2>", unsafe_allow_html=True)
+
+c1, c2, c3 = st.columns(3)
+c1.metric("Rows", f"{len(df):,}")
+c2.metric("Year span", f"{df['year'].min()}–{df['year'].max()}")
+c3.metric("Unique tickers", df['ticker'].nunique())
+
+st.divider()
+
+# -------------------------------------------------------------
+# Summary stats table
+# -------------------------------------------------------------
 
 st.subheader("Summary Statistics (Key Metrics)")
-cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
-        'ESG_Governance_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
-st.dataframe(df[cols].describe())
+core_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
+             'ESG_Governance_Score','ROA','ROE','Net_Profit_Margin','Total_Return']
+st.dataframe(df[core_cols].describe().T.style.format("{:.2f}"))
+
+# -------------------------------------------------------------
+# Distributions in tabs
+# -------------------------------------------------------------
 
 plot_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score','ESG_Governance_Score']
-for col in plot_cols:
-    st.subheader(f"Distribution of {col}")
-    fig, ax = plt.subplots()
-    sns.histplot(df[col].dropna(), kde=True, ax=ax)
-    ax.set_title(f'Distribution of {col}')
-    st.pyplot(fig)
+tabs = st.tabs([f"Dist • {c.split('_')[1]}" if c!='ESG_Combined_Score' else "Dist • Combined" for c in plot_cols])
+for tab, col in zip(tabs, plot_cols):
+    with tab:
+        fig, ax = plt.subplots(figsize=(6,3))
+        sns.histplot(df[col].dropna(), kde=True, ax=ax)
+        ax.set_title(col.replace('_',' '))
+        st.pyplot(fig)
 
-st.subheader("Correlation Heatmap (ESG & Financial Metrics)")
-heat_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score',
-             'ESG_Governance_Score','ROA','ROE','Total_Return','Debt_Ratio']
-fig2, ax2 = plt.subplots(figsize=(10,6))
-sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2)
+# -------------------------------------------------------------
+# Correlation heatmap
+# -------------------------------------------------------------
+
+st.subheader("Correlation Matrix (ESG + Financial)")
+heat_cols = plot_cols + ['ROA','ROE','Total_Return','Debt_Ratio']
+fig2, ax2 = plt.subplots(figsize=(8,5))
+mask = None
+sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2, mask=mask)
+ax2.set_title('Pearson correlations')
 st.pyplot(fig2)
 
-with st.subheader("📈 Yearly Correlation: ESG Combined vs Total Return"):
-    corr = (df.dropna(subset=['ESG_Combined_Score','Total_Return'])
-              .groupby('year')
-              .apply(lambda g: g['ESG_Combined_Score'].corr(g['Total_Return'])))
-    fig3, ax3 = plt.subplots(figsize=(8,4))
-    ax3.plot(corr.index, corr.values, marker='o')
-    ax3.axhline(0, color='gray', linewidth=.8)
-    ax3.set_title('Yearly Correlation: ESG Combined vs Total Return')
-    ax3.set_xlabel('Year'); ax3.set_ylabel('Pearson r'); ax3.grid(alpha=.3)
-    st.pyplot(fig3)
-    st.dataframe(corr.rename('Correlation').reset_index())
+# -------------------------------------------------------------
+# Yearly correlation line
+# -------------------------------------------------------------
+
+st.subheader("Yearly ESG vs Total Return Correlation")
+corr = (
+    df.dropna(subset=['ESG_Combined_Score','Total_Return'])
+      .groupby('year')
+      .apply(lambda g: g['ESG_Combined_Score'].corr(g['Total_Return']))
+)
+fig3, ax3 = plt.subplots(figsize=(8,3))
+ax3.plot(corr.index, corr.values, marker='o', linewidth=2)
+ax3.axhline(0, color='gray', linestyle='--')
+ax3.set_xlabel('Year'); ax3.set_ylabel('Pearson r'); ax3.set_ylim(-1,1)
+ax3.set_title('Correlation by Year')
+st.pyplot(fig3)
+
+st.caption("Hover over heatmap cells or use tabs for detailed distributions.")
