@@ -3,72 +3,52 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from utils import load_esg_zip
 
-# A clean seaborn style for all plots
 sns.set_theme(style="whitegrid")
 
 df = load_esg_zip()
 
-st.markdown("<h2 style='margin-bottom:0.5em'>🏭 Industry‑level ESG Overview</h2>", unsafe_allow_html=True)
+st.markdown("<h2 style='margin-bottom:0.2em'>🏭 Industry‑level ESG Overview</h2>", unsafe_allow_html=True)
 
-# ------------------------------------------------------------------
-# Average ESG per Division (vertical bar with angled labels)
-# ------------------------------------------------------------------
-ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values(ascending=False)
+# --------------------------------------------------
+# Horizontal bar – average ESG per division
+# --------------------------------------------------
+avg_esg = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
 
-c1, c2 = st.columns([4, 1])
-with c1:
-    fig, ax = plt.subplots(figsize=(10, 5))
-    ind.plot(kind="bar", ax=ax, color=sns.color_palette("Blues_r", len(ind)))
-    ax.set_ylabel("Average ESG Combined Score")
-    ax.set_xlabel("")
-    ax.set_title("Average ESG by Industry")
-    plt.xticks(rotation=45, ha="right")  # tilt labels to avoid overlap
-    sns.despine()
+c_bar, c_tbl = st.columns([3,1])
+with c_bar:
+    fig, ax = plt.subplots(figsize=(7,6))
+    sns.barplot(y=avg_esg.index, x=avg_esg.values, palette="viridis", ax=ax)
+    ax.set_xlabel("Average ESG Score"); ax.set_ylabel("")
+    ax.set_title("Mean ESG Combined by Division", loc="left")
     st.pyplot(fig)
+with c_tbl:
+    st.markdown("#### 🔝 Top 5")
+    st.dataframe(avg_esg.tail(5).round(2).to_frame("ESG"))
+    st.markdown("#### 🔻 Bottom 5")
+    st.dataframe(avg_esg.head(5).round(2).to_frame("ESG"))
 
-with c2:
-    st.write("#### 🔝 Top 5")
-    st.dataframe(ind.head(5).to_frame("Avg ESG"))
-    st.write("#### 🔻 Bottom 5")
-    st.dataframe(ind.tail(5).sort_values().to_frame("Avg ESG"))
-
-# ------------------------------------------------------------------
-ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
-
-c1, c2 = st.columns([3, 1])
-with c1:
-    fig, ax = plt.subplots(figsize=(7, 8))
-    ind.plot(kind="barh", ax=ax)
-    ax.set_xlabel("Average ESG Combined Score")
-    ax.set_title("Average ESG by Industry (lower → higher)")
-    ax.invert_yaxis()  # highest value at top
-    st.pyplot(fig)
-
-with c2:
-    st.write("#### 🔝 Top 5 Industries (ESG)")
-    st.dataframe(ind.tail(5).sort_values(ascending=False).to_frame("Avg ESG"))
-    st.write("#### 🔻 Bottom 5")
-    st.dataframe(ind.head(5).to_frame("Avg ESG"))
-
-# ------------------------------------------------------------------
-# ESG trend lines by Division
-# ------------------------------------------------------------------
 st.divider()
-st.subheader("📈 ESG Combined Score Trends by Industry")
 
-trend = (
-    df.groupby(['year', 'Division'])['ESG_Combined_Score']
-      .mean()
-      .unstack()
-      .sort_index()
-)
+# --------------------------------------------------
+# Time‑series trend per division
+# --------------------------------------------------
+st.markdown("### 📈 ESG Trends Across Years")
 
-fig2, ax2 = plt.subplots(figsize=(12, 6))
-trend.plot(ax=ax2, linewidth=2)
-ax2.set_ylabel('Average ESG Score'); ax2.set_xlabel('Year')
-ax2.set_title('ESG Evolution by Division')
-ax2.grid(alpha=0.3)
-ax2.legend(title='Division', bbox_to_anchor=(1.02, 1), loc='upper left', ncol=1, frameon=False)
+# optional filter – allow user to pick subset of divisions
+all_divs = avg_esg.index.tolist()
+sel_divs = st.multiselect("Select divisions to plot", all_divs, default=all_divs[:6])
+
+trend = (df[df['Division'].isin(sel_divs)]
+         .groupby(['year','Division'])['ESG_Combined_Score']
+         .mean()
+         .unstack())
+
+fig2, ax2 = plt.subplots(figsize=(10,5))
+trend.plot(ax=ax2, linewidth=2, marker='o')
+ax2.set_ylabel("Avg ESG Score"); ax2.set_xlabel("Year")
+ax2.set_title("ESG Combined Score Trends by Division")
+ax2.legend(loc='upper left', bbox_to_anchor=(1.02,1))
+ax2.grid(alpha=.3)
 st.pyplot(fig2)
 
-st.caption("Use legend to toggle industries; higher lines indicate better ESG performance over time.")
+st.caption("Tip: deselect divisions to reduce clutter and focus on specific industries.")
