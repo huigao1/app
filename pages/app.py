@@ -75,8 +75,8 @@ st.success("✅ ESG & financial data fetched for " + ticker)
 # ------------------------------------------------------------------
 # Risk range slider
 # ------------------------------------------------------------------
-range_pct = st.slider("Increase ESG risk by (%)", 0, 100, (0, 100), step=20)
-incs = list(range(range_pct[0], range_pct[1]+1, 20))  # e.g., [0,20,40,...]
+range_pct = st.slider("Increase ESG risk by (%)", 0, 100, (0, 100), step=10)
+incs = list(range(range_pct[0], range_pct[1]+1, 10))  # e.g., [0,10,20,...]
 
 results = []
 for pct in incs:
