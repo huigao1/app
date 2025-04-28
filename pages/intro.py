@@ -52,16 +52,16 @@ Also called **EBIT** – profit after operating expenses but before interest & t
 """, unsafe_allow_html=True)
 
 # ---------------- ESG Pillars ----------------
-with st.expander("🌿 ESG Pillars & Key Sub-Scores", expanded=False):
+with st.expander("🌿 ESG Pillars & Key Sub‑Scores", expanded=False):
     st.markdown("""
-| Pillar | Sub-score | Dataset column | What it captures |
+| Pillar | Sub‑score | Dataset column | What it captures |
 |--------|-----------|----------------|------------------|
 | **Environmental** | Emissions | ESG_Emissions_Score | CO₂e footprint, reduction initiatives |
 | | Environmental Overall | ESG_Environmental_Score | Resource use, waste, biodiversity |
-| **Social** | Human Rights | ESG_Human_Rights_Score | Supply-chain labor standards |
+| **Social** | Human Rights | ESG_Human_Rights_Score | Supply‑chain labor standards |
 | | Workforce | ESG_Workforce_Score | Diversity, safety, training |
 | **Governance** | Governance Overall | ESG_Governance_Score | Board structure, pay, audit quality |
-| - | Controversies | ESG_Controversies_Score | Litigation, scandals, regulatory fines |
+| ‑ | Controversies | ESG_Controversies_Score | Litigation, scandals, regulatory fines |
 """)
 
 # ---------------- Next Steps ----------------
