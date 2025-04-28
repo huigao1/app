@@ -11,7 +11,27 @@ df = load_esg_zip()
 st.markdown("<h2 style='margin-bottom:0.5em'>🏭 Industry‑level ESG Overview</h2>", unsafe_allow_html=True)
 
 # ------------------------------------------------------------------
-# Average ESG per Division (horizontal bar)
+# Average ESG per Division (vertical bar with angled labels)
+# ------------------------------------------------------------------
+ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values(ascending=False)
+
+c1, c2 = st.columns([4, 1])
+with c1:
+    fig, ax = plt.subplots(figsize=(10, 5))
+    ind.plot(kind="bar", ax=ax, color=sns.color_palette("Blues_r", len(ind)))
+    ax.set_ylabel("Average ESG Combined Score")
+    ax.set_xlabel("")
+    ax.set_title("Average ESG by Industry")
+    plt.xticks(rotation=45, ha="right")  # tilt labels to avoid overlap
+    sns.despine()
+    st.pyplot(fig)
+
+with c2:
+    st.write("#### 🔝 Top 5")
+    st.dataframe(ind.head(5).to_frame("Avg ESG"))
+    st.write("#### 🔻 Bottom 5")
+    st.dataframe(ind.tail(5).sort_values().to_frame("Avg ESG"))
+
 # ------------------------------------------------------------------
 ind = df.groupby('Division')['ESG_Combined_Score'].mean().sort_values()
 
