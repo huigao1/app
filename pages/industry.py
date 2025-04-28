@@ -31,7 +31,6 @@ col1.table(div_avg.tail(5).iloc[::-1].set_index("Division"))
 col2.write("#### 🔻 Bottom 5")
 col2.table(div_avg.head(5).set_index("Division"))
 
-st.markdown("---")
 
 st.divider()
 st.subheader("📈 ESG Combined Score Trends by Industry over Time")
