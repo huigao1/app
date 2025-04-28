@@ -35,26 +35,17 @@ col2.table(div_avg.head(5).set_index("Division"))
 
 st.markdown("---")
 
-# ───────────────────────────────────────────────────────────────
-# Line：多选 Division 的 ESG 走势
-# ───────────────────────────────────────────────────────────────
-all_divs = div_avg["Division"].tolist()
-default_sel = div_avg.tail(5)["Division"].tolist()
+# ------------------------------------------------------------------
+# ESG Trend by Division across Years (Line chart)
+# ------------------------------------------------------------------
+st.divider()
+st.subheader("📈 ESG Combined Score Trends by Industry over Time")
 
-sel_divs = st.multiselect("Select divisions to plot", all_divs, default=default_sel)
-if sel_divs:
-    trend = (
-        df[df["Division"].isin(sel_divs)]
-          .groupby(["year", "Division"])["ESG_Combined_Score"]
-          .mean().reset_index()
-    )
-    line_fig = px.line(
-        trend, x="year", y="ESG_Combined_Score", color="Division",
-        markers=True, height=450,
-        labels={"ESG_Combined_Score": "Average ESG"},
-    )
-    line_fig.update_yaxes(range=[0, 100])
-    line_fig.update_layout(margin=dict(t=40, r=10, b=10))
-    st.plotly_chart(line_fig, use_container_width=True)
-else:
-    st.info("⬅️ Pick at least one division to show its trend.")
+trend = df.groupby(['year','Division'])['ESG_Combined_Score'].mean().unstack(fill_value=None)
+fig2, ax2 = plt.subplots(figsize=(12,6))
+trend.plot(ax=ax2)
+ax2.set_title('ESG Combined Score Trends by Industry')
+ax2.set_ylabel('ESG Score')
+ax2.set_xlabel('Year')
+ax2.legend(loc='upper left', bbox_to_anchor=(1.02,1))
+st.pyplot(fig2)
