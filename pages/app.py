@@ -21,7 +21,7 @@ def load_model(fname: str):
 
 # Load both models
 ebitda_model   = load_model('ebitda_margin_model.pkl')
-operating_model= load_model('operating_margin_predictor.pkl')
+operating_model= load_model('operating_margin_model.pkl')
 
 # ------------------------------------------------------------------
 # User Input (ticker)
