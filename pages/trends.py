@@ -235,10 +235,6 @@ with tab_yoy:
 
 st.markdown("---")
 
-# -------------------------------------------------------------
-# Heatmap
-# -------------------------------------------------------------
-st.markdown("## 📊 ESG Heatmap by Division × Year")
 
 heat_df = (
     df_win.groupby(["year", "Division"])["ESG_Combined_Score"]
@@ -261,6 +257,6 @@ sns.heatmap(
 )
 ax3.set_xlabel("Year")
 ax3.set_ylabel("Division")
-plt.xticks(rotation=45)
+plt.xticks(rotation=90)
 plt.yticks(rotation=0)
 st.pyplot(fig3)
