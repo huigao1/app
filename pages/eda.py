@@ -23,7 +23,7 @@ st.markdown("<h2 style='margin-bottom:0.2em'>🔍 ESG Exploratory Data Analysis<
 c1, c2, c3 = st.columns(3)
 c1.metric("Rows", f"{len(df):,}")
 c2.metric("Year span", f"{df['year'].min()}–{df['year'].max()}")
-c3.metric("Unique tickers", df['ticker'].nunique())
+c3.metric("Unique tickers", df['ticker_ann'].nunique())
 
 st.divider()
 
