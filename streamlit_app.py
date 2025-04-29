@@ -18,5 +18,5 @@ pg = st.navigation({
 
 with st.sidebar:
     st.header("Navigation")
-    st.markdown("Use the **top bar** to switch pages. Source: `esg_cleaned_final.csv.zip`")
+    st.markdown("Use the **top bar** to switch pages. Data Source: WRDS")
 pg.run()
