@@ -31,7 +31,7 @@ df_win = df[df["year"].between(start, end)]
 # -------------------------------------------------------------
 st.markdown("## 📈 ESG & Return Trends")
 
-metrics_avail = ["ESG_Combined_Score", "Total_Return"]
+metrics_avail = ["ESG_Combined_Score", ‘ESG_Environmental_Score’,ESG_Social_Score','ESG_Government_Score',"Total_Return"]
 sel_metrics = st.multiselect("Metrics", metrics_avail, default=["ESG_Combined_Score"])
 window = st.slider("Rolling average window", 1, 5, 1, key="roll")
 
