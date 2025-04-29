@@ -2,18 +2,12 @@ import streamlit as st
 import pandas as pd
 from utils import load_esg_zip
 
-# -------------------------------------------------------------
-# Title
-# -------------------------------------------------------------
 st.markdown(
     "<h2 style='color:#d62728'>🔍 Corporate Margin Predictor</h2>"
     "<h4>Forecasting Profitability with Financial &amp; ESG Signals</h4>",
     unsafe_allow_html=True,
 )
 
-# -------------------------------------------------------------
-# Why this dashboard
-# -------------------------------------------------------------
 st.markdown("### 🔎 Why This Matters")
 st.markdown(
     """
@@ -23,9 +17,6 @@ st.markdown(
 """
 )
 
-# -------------------------------------------------------------
-# Why these two targets
-# -------------------------------------------------------------
 st.markdown("### 🎯 Why Predict *EBITDA* & *Operating* Margins")
 st.markdown(
     """
@@ -37,9 +28,6 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# -------------------------------------------------------------
-# Key formulas
-# -------------------------------------------------------------
 st.markdown("### 📚 Key Formulas")
 st.markdown(
     """
@@ -54,9 +42,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# -------------------------------------------------------------
-# ESG pillars
-# -------------------------------------------------------------
+
 st.markdown("### 🌿 ESG Pillars at a Glance")
 st.markdown(
     """
@@ -72,9 +58,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-# -------------------------------------------------------------
-# Next steps
-# -------------------------------------------------------------
+
 st.markdown("### 🚀 Get Started")
 st.markdown(
     """
@@ -86,9 +70,6 @@ st.markdown(
 
 st.markdown("---")
 
-# -------------------------------------------------------------
-# Data preview
-# -------------------------------------------------------------
 @st.cache_data(show_spinner=False)
 def load_data() -> pd.DataFrame:
     return load_esg_zip()
