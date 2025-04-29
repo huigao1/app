@@ -8,7 +8,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.markdown("Team members: Hui Gao, Zehui Wang, Phunsok Norboo")
+st.markdown("Team members: Hui Gao, Phunsok Norboo, Zehui Wang")
 st.markdown("### 🔎 Why This Matters")
 st.markdown(
     """
