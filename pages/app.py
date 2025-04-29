@@ -5,7 +5,23 @@ import numpy as np
 import joblib, matplotlib.pyplot as plt
 from pathlib import Path
 
-st.title("🧪 ESG Risk What‑If Simulator – EBITDA & Operating Margins")
+st.title("🧪 ESG Risk What-If Simulator: Real-Time EBITDA & Operating Margin Predictions")
+
+st.markdown(
+    """
+This tool provides a **dynamic what-if analysis** based on real-time financial and ESG data.  
+
+By **inputting a stock ticker**, the simulator fetches the company's latest financial statements and ESG scores from Yahoo Finance.  
+Our pre-trained model then predicts how the company's **EBITDA Margin** and **Operating Margin** would change if its **ESG risk scores** (Environmental, Social, Governance) were to increase by various percentages.
+
+Key features:
+- Real-time data integration for **current company profiles**.
+- Simulated **impact of ESG risk deterioration** on core profitability metrics.
+- Results displayed in both **interactive tables** and **margin trend curves**.
+
+This simulation highlights how sustainability challenges can financially materialize, providing an actionable lens for investment analysis, corporate risk management, and strategic planning.
+"""
+)
 
 def load_model(fname: str):
     for p in [Path(__file__).resolve().parent.parent / fname,
