@@ -83,17 +83,50 @@ mae = mean_absolute_error(y, pred)
 
 st.metric("R²", f"{r2:.3f}")
 st.metric("MAE", f"{mae:.3f}")
+import numpy as np
+from sklearn.inspection import permutation_importance
 
-st.subheader(
-    "Feature Importance" if model_type == "HistGradientBoosting" else "Coefficients"
-)
-if model_type == "Linear Regression":
-    coef_df = pd.DataFrame({"Feature": x_cols, "Weight": model.named_steps["lr"].coef_})
+# … after you’ve fit your `model` and computed `pred`, `r2`, `mae` …
+
+st.metric("R²", f"{r2:.3f}")
+st.metric("MAE", f"{mae:.3f}")
+
+# ────────────────────────────────────────────────────────────────
+# Show built-in (impurity) importances for HGB
+# ────────────────────────────────────────────────────────────────
+if model_type == "HistGradientBoosting":
+    st.subheader("🔧 Impurity-based Importances")
+    imp = model.feature_importances_
+    imp_df = (
+        pd.DataFrame({"Feature": x_cols, "Importance": imp})
+        .sort_values("Importance", ascending=False)
+        .set_index("Feature")
+    )
+    st.dataframe(imp_df.style.format("{:.4f}"))
 else:
-    import numpy as np
+    st.subheader("📐 Linear Coefficients")
+    coef = model.named_steps["lr"].coef_
+    coef_df = (
+        pd.DataFrame({"Feature": x_cols, "Coefficient": coef})
+        .sort_values("Coefficient", ascending=False)
+        .set_index("Feature")
+    )
+    st.dataframe(coef_df.style.format("{:.4f}"))
 
-    imp = model.feature_importances_ if hasattr(model, "feature_importances_") else np.zeros(len(x_cols))
-    coef_df = pd.DataFrame({"Feature": x_cols, "Weight": imp})
-
-coef_df = coef_df.sort_values("Weight", ascending=False).set_index("Feature")
-st.dataframe(coef_df.style.format("{:.4f}"))
+# ────────────────────────────────────────────────────────────────
+# Permutation Importances (robust, model-agnostic)
+# ────────────────────────────────────────────────────────────────
+st.subheader("🔁 Permutation Importances")
+perm = permutation_importance(
+    model, X, y, n_repeats=10, random_state=42, n_jobs=-1
+)
+perm_df = (
+    pd.DataFrame({
+        "Feature": x_cols,
+        "Importance (mean)": perm.importances_mean,
+        "Std Dev": perm.importances_std
+    })
+    .sort_values("Importance (mean)", ascending=False)
+    .set_index("Feature")
+)
+st.dataframe(perm_df.style.format("{:.4f}"))
