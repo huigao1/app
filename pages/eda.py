@@ -31,12 +31,6 @@ The dataset enables longitudinal analysis of how financial performance and susta
     unsafe_allow_html=True,
 )
 
-@st.cache_data(show_spinner=False)
-def load_data() -> pd.DataFrame:
-    return load_esg_zip()
-
-
-df = load_data()
 
 st.subheader("📄 Dataset Preview")
 st.dataframe(df.head())
