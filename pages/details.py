@@ -195,6 +195,6 @@ import joblib
 # assuming gb_pipe is already trained
 joblib.dump(gb_pipe, "operating_margin_predictor.pkl")"""
 
-st.title("📑 Original Code – EBITDA Gradient Boosting Training")
+st.title("📑 Original Code – Operating Gradient Boosting Training")
 
 st.code(CODE2, language="python")
