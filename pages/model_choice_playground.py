@@ -9,6 +9,20 @@ from utils import load_esg_zip
 
 st.title("⚙️ Model Playground – Linear vs HistGradientBoosting")
 
+st.markdown(
+    """
+This page lets you **experiment with two machine learning models** — Linear Regression and HistGradientBoosting — to understand how different features influence financial outcomes like **EBITDA Margin** or **Operating Margin**.
+
+You can:
+- **Select any numerical target** and choose relevant **input features (X)**.
+- **Compare model performance** using R² (fit quality) and MAE (error size).
+- For boosting models, **adjust hyperparameters** (depth, learning rate, estimators) to observe overfitting or underfitting.
+- Explore **feature importance or model coefficients** to learn which inputs drive predictions.
+
+This tool helps reveal how ESG and financial metrics interact, and gives hands-on insight into model behavior — ideal for both learning and analysis.
+"""
+)
+
 st.markdown("""
 Choose between a **simple Linear Regression** or a **HistGradientBoostingRegressor** to see how different algorithms fit the data.
 
