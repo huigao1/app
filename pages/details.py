@@ -95,7 +95,7 @@ st.title("📑 Original Code – EBITDA Gradient Boosting Training")
 
 st.code(CODE, language="python")
 
-CODE = """import pandas as pd
+CODE2 = """import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
