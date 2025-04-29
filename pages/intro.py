@@ -9,12 +9,27 @@ st.markdown(
 )
 
 st.markdown("Team members: Hui Gao, Phunsok Norboo, Zehui Wang")
+
+st.markdown("### 🌿 What is an ESG Score?")
+
+st.markdown(
+    """
+- **ESG (Environmental, Social, and Governance)** scores assess how well a company manages non-financial risks.
+- **Environmental**: Tracks climate impact, emissions, waste, and resource usage.
+- **Social**: Measures labor practices, diversity, community impact, and human rights.
+- **Governance**: Evaluates board structure, transparency, audit practices, and ethics.
+
+ESG scores translate complex qualitative factors into measurable data, helping investors and analysts  
+incorporate long-term sustainability and reputational risk into financial decision-making.
+    """
+)
+
 st.markdown("### 🔎 Why This Matters")
 st.markdown(
     """
 - **Investor Insight** · Link asset efficiency, leverage & ESG to bottom-line margins  
 - **Strategic Planning** · Run *what-if* ESG scenarios (e.g.\ +5pts Environmental → Δ EBITDA)  
-- **Valuation Edge** · Bridge sustainability metrics with pricing to detect mis-valued stocks
+- **Valuation Edge** · Converts abstract ESG ratings into forecastable financial outcomes.
 """
 )
 
@@ -23,8 +38,8 @@ st.markdown(
     """
 | &nbsp;Metric&nbsp; | Why it matters |
 |-------------------|----------------|
-| **EBITDA Margin** | Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
-| **Operating Margin** | Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
+| **EBITDA Margin** | Measures core operational profitability before interest, taxes, depreciation, and amortization.<br>Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
+| **Operating Margin** | Captures profitability after depreciation and amortization are deducted.<br>Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
 """,
     unsafe_allow_html=True,
 )
@@ -47,17 +62,15 @@ st.markdown(
 st.markdown("### 🌿 ESG Pillars at a Glance")
 st.markdown(
     """
-| Pillar | Key Sub-score | Column | Captures |
-|--------|---------------|--------|----------|
-| **E** | Emissions | `ESG_Emissions_Score` | CO₂e footprint, reduction targets |
-|  | Environmental Overall | `ESG_Environmental_Score` | Resource use, waste, biodiversity |
-| **S** | Human Rights | `ESG_Human_Rights_Score` | Supplier labor standards |
-|  | Workforce | `ESG_Workforce_Score` | Diversity, safety, training |
-| **G** | Governance | `ESG_Governance_Score` | Board quality, exec pay, audit risk |
-| – | Controversies | `ESG_Controversies_Score` | Litigation, scandals, fines |
+| Pillar | ESG Score | Column | What it Measures |
+|--------|-----------|--------|------------------|
+| **E** | Environmental Score | `ESG_Environmental_Score` | Assesses a company's resource use, emissions, and environmental risk management. Reflects exposure to climate-related issues such as carbon footprint and energy efficiency. High scores indicate proactive sustainability practices and lower environmental liabilities. |
+| **S** | Social Score | `ESG_Social_Score` | Evaluates labor practices, employee welfare, and community impact. Includes factors like diversity, training, safety, and supply chain ethics. Strong social performance can enhance reputation and reduce operational risks. |
+| **G** | Governance Score | `ESG_Governance_Score` | Measures oversight quality, executive accountability, and internal controls. Covers board composition, shareholder rights, and audit transparency. Sound governance underpins long-term strategy and regulatory compliance. |
 """,
     unsafe_allow_html=True,
 )
+
 
 
 st.markdown("### 🚀 Get Started")
