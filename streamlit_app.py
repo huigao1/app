@@ -19,5 +19,5 @@ pg = st.navigation({
 with st.sidebar:
     st.header("Navigation")
     st.markdown("Use the **top bar** to switch pages. ")
-    st.markdown("Data Source: WRDS")
+    st.markdown("Data Source: **WRDS**")
 pg.run()
