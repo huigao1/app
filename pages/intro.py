@@ -10,39 +10,21 @@ st.markdown(
 
 st.markdown("Team members: Hui Gao, Phunsok Norboo, Zehui Wang")
 
-st.markdown("### 🌿 What is an ESG Score?")
-
+st.markdown("### 🧠 What Our Model Does — and Why It Matters")
 st.markdown(
     """
-- **ESG (Environmental, Social, and Governance)** scores assess how well a company manages non-financial risks.
-- **Environmental**: Tracks climate impact, emissions, waste, and resource usage.
-- **Social**: Measures labor practices, diversity, community impact, and human rights.
-- **Governance**: Evaluates board structure, transparency, audit practices, and ethics.
+This model estimates **EBITDA Margin** and **Operating Margin** using a combination of ESG scores and traditional financial metrics.  
 
-ESG scores translate complex qualitative factors into measurable data, helping investors and analysts  
-incorporate long-term sustainability and reputational risk into financial decision-making.
-    """
-)
+It applies a **regression-based approach** to uncover patterns between a firm’s sustainability profile and its financial outcomes.  
+By translating abstract ESG indicators into quantifiable margin projections, the model supports:
+- Early-stage **financial forecasting**
+- ESG **scenario planning**
+- **Valuation analysis** for investment and strategy teams
 
-st.markdown("### 🔎 Why This Matters")
-st.markdown(
-    """
-- **Investor Insight** · Link asset efficiency, leverage & ESG to bottom-line margins  
-- **Strategic Planning** · Run *what-if* ESG scenarios (e.g.\ +5pts Environmental → Δ EBITDA)  
-- **Valuation Edge** · Converts abstract ESG ratings into forecastable financial outcomes.
-"""
-)
-
-st.markdown("### 🎯 Why Predict *EBITDA* & *Operating* Margins")
-st.markdown(
-    """
-| &nbsp;Metric&nbsp; | Why it matters |
-|-------------------|----------------|
-| **EBITDA Margin** | Measures core operational profitability before interest, taxes, depreciation, and amortization.<br>Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
-| **Operating Margin** | Captures profitability after depreciation and amortization are deducted.<br>Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
-""",
-    unsafe_allow_html=True,
-)
+| Metric | What it measures | Why it matters |
+|--------|------------------|----------------|
+| **EBITDA Margin** | Core operational profitability before interest, taxes, depreciation, and amortization | Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
+| **Operating Margin** | Profitability after depreciation and amortization are deducted | Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
 
 st.markdown("### 📚 Key Formulas")
 st.markdown(
@@ -58,6 +40,28 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+### 🔎 Why This Matters
+
+- **Investor Insight** · Link asset efficiency, leverage & ESG to bottom-line margins  
+- **Strategic Planning** · Run *what-if* ESG scenarios (e.g. +5pts Environmental → Δ EBITDA)  
+- **Valuation Edge** · Converts abstract ESG ratings into forecastable financial outcomes.
+""",
+    unsafe_allow_html=True,
+)
+
+st.markdown("### 🌿 What is an ESG Score?")
+
+st.markdown(
+    """
+- **ESG (Environmental, Social, and Governance)** scores assess how well a company manages non-financial risks.
+- **Environmental**: Tracks climate impact, emissions, waste, and resource usage.
+- **Social**: Measures labor practices, diversity, community impact, and human rights.
+- **Governance**: Evaluates board structure, transparency, audit practices, and ethics.
+
+ESG scores translate complex qualitative factors into measurable data, helping investors and analysts  
+incorporate long-term sustainability and reputational risk into financial decision-making.
+    """
+)
 
 st.markdown("### 🌿 ESG Pillars at a Glance")
 st.markdown(
@@ -70,7 +74,6 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
-
 
 
 st.markdown("### 🚀 Get Started")
