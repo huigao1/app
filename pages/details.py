@@ -21,7 +21,7 @@ st.dataframe(ratio_info)
 
 
 st.subheader("📊 Model Pipeline"):
-    with st.markdown("""
+st.markdown("""
     ```
     ESG & Financial Features ─▶ StandardScaler ─▶
        ├─ LinearRegression
