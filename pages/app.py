@@ -124,5 +124,5 @@ with tab2:
 
 st.success("🧹 Scenario simulation complete!")
 
-with st.markdown("👀 Full Streamlit source code"):
+with st.markdown("👀 Full Streamlit Code for this App"):
     st.code(Path(__file__).read_text(), language="python")
