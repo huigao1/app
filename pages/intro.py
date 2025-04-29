@@ -10,15 +10,13 @@ st.markdown(
 
 st.markdown("Team members: Hui Gao, Phunsok Norboo, Zehui Wang")
 
+st.markdown("### 🧠 What Our Model Does — and Why It Matters")
 st.markdown(
     """
 This model estimates **EBITDA Margin** and **Operating Margin** using a combination of ESG scores and traditional financial metrics.  
 
 It applies a **regression-based approach** to uncover patterns between a firm’s sustainability profile and its financial outcomes.  
-By translating abstract ESG indicators into quantifiable margin projections, the model supports:
-- Early-stage **financial forecasting**
-- ESG **scenario planning**
-- **Valuation analysis** for investment and strategy teams
+By translating abstract ESG indicators into quantifiable margin projections, the model supports early-stage financial forecastingE, ESG scenario planning, as well as valuation analysis for investment and strategy teams
 
 | Metric | What it measures | Why it matters |
 |--------|------------------|----------------|
