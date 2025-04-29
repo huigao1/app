@@ -3,11 +3,11 @@ st.set_page_config(page_title="ESG Analytics Suite", page_icon="💹", layout="w
 
 
 App_page_intro  = st.Page("pages/intro.py",              title="Welcome",              icon="🏠", default=True)
-App_page_eda    = st.Page("pages/eda.py",                title="Exploratory Analysis", icon="🔍")
-App_page_ind    = st.Page("pages/industry.py",           title="Industry ESG",         icon="🏭")
+App_page_eda    = st.Page("pages/eda.py",                title="About Our Data", icon="🔍")
+App_page_ind    = st.Page("pages/industry.py",           title="Industry ESG Distribution",  icon="🏭")
 App_page_trend  = st.Page("pages/trends.py",             title="Time-Series Trends",   icon="⏳")
-App_page_reg    = st.Page("pages/model_choice_playground.py",  title="Regression Playground",icon="📈")
-App_page_detail = st.Page("pages/details.py",            title="Model & Ratios",       icon="📝")
+App_page_reg    = st.Page("pages/model_choice_playground.py",  title="Regression Model Comparison",icon="📈")
+App_page_detail = st.Page("pages/details.py",            title="Features We Used",       icon="📝")
 App_page_predict = st.Page("pages/app.py",            title="Predict by Ticker",     icon="🎯")
 
 pg = st.navigation({
