@@ -19,9 +19,8 @@ ratio_info = pd.DataFrame([
 st.subheader("Key Features & Targets")
 st.dataframe(ratio_info)
 
-
-st.expand("📊 Model Pipeline"):
-st.markdown("""
+with st.expander("📊 Model Pipeline"):
+     st.markdown("""
     ```
     ESG & Financial Features ─▶ StandardScaler ─▶
        ├─ LinearRegression
