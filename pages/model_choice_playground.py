@@ -10,7 +10,7 @@ from utils import load_esg_zip
 st.title("⚙️ Model Playground – Linear vs HistGradientBoosting")
 
 st.markdown("""
-Choose between a **simple Linear Regression** or the tree‑based **HistGradientBoostingRegressor** to see how different algorithms fit the data.
+Choose between a **simple Linear Regression** or a **HistGradientBoostingRegressor** to see how different algorithms fit the data.
 
 * **R²** – proportion of variance explained (closer to 1 ➜ better).
 * **MAE** – average absolute error (closer to 0 ➜ better).
