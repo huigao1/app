@@ -47,19 +47,6 @@ incorporate long-term sustainability and reputational risk into financial decisi
     """
 )
 
-st.markdown("### 🌿 ESG Pillars at a Glance")
-st.markdown(
-    """
-| Pillar | ESG Score | Column | What it Measures |
-|--------|-----------|--------|------------------|
-| **E** | Environmental Score | `ESG_Environmental_Score` | Assesses a company's resource use, emissions, and environmental risk management. Reflects exposure to climate-related issues such as carbon footprint and energy efficiency. High scores indicate proactive sustainability practices and lower environmental liabilities. |
-| **S** | Social Score | `ESG_Social_Score` | Evaluates labor practices, employee welfare, and community impact. Includes factors like diversity, training, safety, and supply chain ethics. Strong social performance can enhance reputation and reduce operational risks. |
-| **G** | Governance Score | `ESG_Governance_Score` | Measures oversight quality, executive accountability, and internal controls. Covers board composition, shareholder rights, and audit transparency. Sound governance underpins long-term strategy and regulatory compliance. |
-""",
-    unsafe_allow_html=True,
-)
-
-
 st.markdown("### 🧭 App Navigation Guide")
 st.markdown(
     """
