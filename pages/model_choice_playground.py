@@ -96,7 +96,9 @@ st.metric("MAE", f"{mae:.3f}")
 # ────────────────────────────────────────────────────────────────
 if model_type == "HistGradientBoosting":
     st.subheader("🔧 Impurity-based Importances")
-    imp = model.feature_importances_
+    # Access the underlying HistGradientBoostingRegressor:
+    gb = model.named_steps["gb"]
+    imp = gb.feature_importances_
     imp_df = (
         pd.DataFrame({"Feature": x_cols, "Importance": imp})
         .sort_values("Importance", ascending=False)
@@ -105,9 +107,9 @@ if model_type == "HistGradientBoosting":
     st.dataframe(imp_df.style.format("{:.4f}"))
 else:
     st.subheader("📐 Linear Coefficients")
-    coef = model.named_steps["lr"].coef_
+    coefs = model.named_steps["lr"].coef_
     coef_df = (
-        pd.DataFrame({"Feature": x_cols, "Coefficient": coef})
+        pd.DataFrame({"Feature": x_cols, "Coefficient": coefs})
         .sort_values("Coefficient", ascending=False)
         .set_index("Feature")
     )
