@@ -19,6 +19,37 @@ ratio_info = pd.DataFrame([
 st.subheader("Key Features & Targets")
 st.dataframe(ratio_info)
 
+# Define feature details for EBITDA Margin model
+ebitda_features = pd.DataFrame([
+    ["Asset_Turnover", "Revenues_Total / Assets_Total", "Measures efficiency in using assets to generate sales"],
+    ["Debt_Ratio", "Liabilities_Total / Assets_Total", "Captures financial leverage and risk exposure"],
+    ["Log_Assets", "ln(Assets_Total)", "Scales firm size while reducing skewness"],
+    ["ROA", "Net_Income / Assets_Total", "Indicates profitability from asset base"],
+    ["Net_Profit_Margin", "Net_Income / Revenues_Total", "Reflects share of sales turned into profit"],
+    ["CashFlow_Margin", "Cash_Flow_Operating / Revenues_Total", "Highlights liquidity and core cash generation"],
+    ["ESG_Environmental_Score", "WRDS ESG Score", "Represents environmental sustainability practices"],
+    ["ESG_Social_Score", "WRDS ESG Score", "Represents social responsibility & labor relations"],
+    ["ESG_Governance_Score", "WRDS ESG Score", "Represents board quality and executive oversight"]
+], columns=["Feature", "Formula", "Why Included"])
+
+# Define feature details for Operating Margin model
+operating_features = pd.DataFrame([
+    ["Asset_Turnover", "Revenues_Total / Assets_Total", "Measures efficiency in using assets to generate sales"],
+    ["Debt_Ratio", "Liabilities_Total / Assets_Total", "Captures financial leverage and risk exposure"],
+    ["Log_Assets", "ln(Assets_Total)", "Scales firm size while reducing skewness"],
+    ["CapEx_Intensity", "Capital_Expenditures / Revenues_Total", "Represents fixed asset investment burden"],
+    ["ESG_Environmental_Score", "WRDS ESG Score", "Represents environmental sustainability practices"],
+    ["ESG_Social_Score", "WRDS ESG Score", "Represents social responsibility & labor relations"],
+    ["ESG_Governance_Score", "WRDS ESG Score", "Represents board quality and executive oversight"]
+], columns=["Feature", "Formula", "Why Included"])
+
+# Display tables in Streamlit
+st.subheader("📊 Features Used in EBITDA Margin Model")
+st.dataframe(ebitda_features)
+
+st.subheader("📊 Features Used in Operating Margin Model")
+st.dataframe(operating_features)
+
 with st.expander("📊 Model Pipeline"):
      st.markdown("""
     ```
