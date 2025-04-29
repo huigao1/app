@@ -20,7 +20,6 @@ Choose between a **simple Linear Regression** or the tree‑based **HistGradient
 df = load_esg_zip()
 num_cols = df.select_dtypes("number").columns.tolist()
 
-# ---------------- UI ----------------
 colA, colB = st.columns(2)
 with colA:
     y_col = st.selectbox(
@@ -41,7 +40,6 @@ if not x_cols:
     st.info("Select at least one feature.")
     st.stop()
 
-# ---------------- Data prep ----------------
 X = df[x_cols].dropna()
 y = df.loc[X.index, y_col].dropna()
 common = X.index.intersection(y.index)
@@ -51,7 +49,6 @@ if len(common) < 30:
     st.warning("Not enough rows after dropping NA.")
     st.stop()
 
-# ---------------- Model training ----------------
 if model_type == "Linear Regression":
     model = Pipeline([("sc", StandardScaler()), ("lr", LinearRegression())])
 else:
@@ -74,7 +71,6 @@ mae = mean_absolute_error(y, pred)
 st.metric("R²", f"{r2:.3f}")
 st.metric("MAE", f"{mae:.3f}")
 
-# ---------------- Coefficients / Feature importance --------------
 st.subheader(
     "Feature Importance" if model_type == "HistGradientBoosting" else "Coefficients"
 )
