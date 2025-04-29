@@ -31,6 +31,18 @@ The dataset enables longitudinal analysis of how financial performance and susta
     unsafe_allow_html=True,
 )
 
+@st.cache_data(show_spinner=False)
+def load_data() -> pd.DataFrame:
+    return load_esg_zip()
+
+
+df = load_data()
+
+st.subheader("📄 Dataset Preview")
+st.dataframe(df.head())
+
+st.caption("Use the navigation bar at the top to explore · download · model.")
+
 st.markdown("### 📊 ESG Score Distributions")
 plot_cols = ['ESG_Combined_Score','ESG_Environmental_Score','ESG_Social_Score','ESG_Governance_Score']
 tabs = st.tabs([f"Dist • {c.split('_')[1]}" if c!='ESG_Combined_Score' else "Dist • Combined" for c in plot_cols])
