@@ -87,16 +87,3 @@ st.markdown(
 )
 
 
-st.markdown("---")
-
-@st.cache_data(show_spinner=False)
-def load_data() -> pd.DataFrame:
-    return load_esg_zip()
-
-
-df = load_data()
-
-st.subheader("📄 Dataset Preview")
-st.dataframe(df.head())
-
-st.caption("Use the navigation bar at the top to explore · download · model.")
