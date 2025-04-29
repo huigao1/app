@@ -20,7 +20,7 @@ By translating abstract ESG indicators into quantifiable margin projections, the
 
 | Metric | What it measures | Why it matters |
 |--------|------------------|----------------|
-| **EBITDA Margin** | Core operational profitability before interest, taxes, depreciation, and amortization | Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
+| **EBITDA Margin** | Core operational profitability before interest, taxes, depreciation, and amortization | Removes capital-structure noise → comparable across firms.|
 | **Operating Margin** | Profitability after depreciation and amortization are deducted | Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
 
 ### 🔎 Why This Matters
