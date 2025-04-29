@@ -10,7 +10,6 @@ st.markdown(
 
 st.markdown("Team members: Hui Gao, Phunsok Norboo, Zehui Wang")
 
-st.markdown("### 🧠 What Our Model Does — and Why It Matters")
 st.markdown(
     """
 This model estimates **EBITDA Margin** and **Operating Margin** using a combination of ESG scores and traditional financial metrics.  
@@ -26,20 +25,6 @@ By translating abstract ESG indicators into quantifiable margin projections, the
 | **EBITDA Margin** | Core operational profitability before interest, taxes, depreciation, and amortization | Removes capital-structure noise → comparable across firms.<br>Anchors EV/EBITDA multiples. |
 | **Operating Margin** | Profitability after depreciation and amortization are deducted | Includes depreciation → full cost discipline.<br>Core KPI in DCF & management guidance. |
 
-st.markdown("### 📚 Key Formulas")
-st.markdown(
-    """
-| Metric | Formula |
-|--------|---------|
-| **EBITDA Margin** | `EBITDA / Revenue` |
-| **Operating Margin** | `Operating Income / Revenue` |
-
-<small><strong>EBITDA</strong> = Earnings Before Interest · Taxes · Depreciation · Amortization.  
-<strong>Operating Income</strong> (EBIT) = profit after operating costs but before interest & tax.</small>
-""",
-    unsafe_allow_html=True,
-)
-
 ### 🔎 Why This Matters
 
 - **Investor Insight** · Link asset efficiency, leverage & ESG to bottom-line margins  
@@ -48,6 +33,7 @@ st.markdown(
 """,
     unsafe_allow_html=True,
 )
+
 
 st.markdown("### 🌿 What is an ESG Score?")
 
