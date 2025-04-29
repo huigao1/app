@@ -7,10 +7,6 @@ from pathlib import Path
 
 st.title("🧪 ESG Risk What‑If Simulator – EBITDA & Operating Margins")
 
-# ------------------------------------------------------------------
-# Helper: load model from repo root or same dir
-# ------------------------------------------------------------------
-
 def load_model(fname: str):
     for p in [Path(__file__).resolve().parent.parent / fname,
               Path(__file__).resolve().with_name(fname)]:
@@ -23,18 +19,12 @@ def load_model(fname: str):
 ebitda_model   = load_model('ebitda_margin_model.pkl')
 operating_model= load_model('operating_margin_model.pkl')
 
-# ------------------------------------------------------------------
-# User Input (ticker)
-# ------------------------------------------------------------------
 
 ticker = st.text_input("Enter a stock ticker (example: AAPL, TSLA):").strip().upper()
 if not ticker:
     st.stop()
 
-# ------------------------------------------------------------------
 # Fetch ESG + Financial data via yfinance
-# ------------------------------------------------------------------
-
 try:
     stock = yf.Ticker(ticker)
     sustainability = stock.sustainability
@@ -61,7 +51,6 @@ try:
 except Exception as e:
     st.error(f"Data fetch error: {e}"); st.stop()
 
-# Derived ratios
 asset_turnover   = revenue / total_assets
 log_assets       = np.log10(total_assets)
 debt_ratio       = total_liab / total_assets
@@ -72,9 +61,6 @@ capex_intensity  = abs(capex) / revenue
 
 st.success("✅ ESG & financial data fetched for " + ticker)
 
-# ------------------------------------------------------------------
-# Risk range slider
-# ------------------------------------------------------------------
 range_pct = st.slider("Increase ESG risk by (%)", 0, 100, (0, 100), step=10)
 incs = list(range(range_pct[0], range_pct[1]+1, 10))  # e.g., [0,10,20,...]
 
@@ -85,10 +71,8 @@ for pct in incs:
     new_soc = min(soc_risk*factor, 100)
     new_gov = min(gov_risk*factor, 100)
 
-    # Normalized ESG scores (0‑1, higher better)
     NE, NS, NG = [1 - x/100 for x in (new_env,new_soc,new_gov)]
 
-    # Build input rows for each model
     ebt_row = pd.DataFrame([{ 'Asset_Turnover': asset_turnover, 'Debt_Ratio': debt_ratio, 'Log_Assets': log_assets,
                               'ROA': roa, 'Net_Profit_Margin': net_margin, 'CashFlow_Margin': cashflow_margin,
                               'ESG_Environmental_Score': NE, 'ESG_Social_Score': NS, 'ESG_Governance_Score': NG }])
@@ -104,10 +88,7 @@ for pct in incs:
 
 results_df = pd.DataFrame(results)
 
-# ------------------------------------------------------------------
 # Display tabs
-# ------------------------------------------------------------------
-
 tab1, tab2 = st.tabs(["Results Table", "Margin Curves"])
 
 with tab1:
@@ -123,7 +104,6 @@ with tab2:
     st.pyplot(fig)
 
 st.success("🧹 Scenario simulation complete!")
-
 
 st.title("👀 Full Streamlit Code for this App")
 with st.markdown("👀 Full Streamlit Code for this App"):
