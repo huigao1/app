@@ -20,8 +20,8 @@ st.subheader("Key Features & Targets")
 st.dataframe(ratio_info)
 
 
-with st.subheader("📊 Model Pipeline"):
-    st.markdown("""
+st.subheader("📊 Model Pipeline"):
+    with st.markdown("""
     ```
     ESG & Financial Features ─▶ StandardScaler ─▶
        ├─ LinearRegression
