@@ -123,3 +123,6 @@ with tab2:
     st.pyplot(fig)
 
 st.success("🧹 Scenario simulation complete!")
+
+with st.expander("👀 Full Streamlit source code"):
+    st.code(Path(__file__).read_text(), language="python")
