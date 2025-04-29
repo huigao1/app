@@ -7,9 +7,7 @@ from utils import load_esg_zip
 sns.set_style("whitegrid")
 plt.rcParams["figure.facecolor"] = "white"
 
-# -------------------------------------------------------------
-# Load + sidebar filters
-# -------------------------------------------------------------
+
 @st.cache_data(show_spinner=False)
 def load_data():
     return load_esg_zip()
@@ -26,9 +24,6 @@ sel_div = st.sidebar.selectbox("Division (heatmap)", ["All"] + divisions)
 
 df_win = df[df["year"].between(start, end)]
 
-# -------------------------------------------------------------
-# Tabs: rolling-mean & YoY charts
-# -------------------------------------------------------------
 st.markdown("## 📈 ESG & Return Trends")
 
 metrics_avail = ["ESG_Combined_Score", "ESG_Environmental_Score","ESG_Social_Score","ESG_Governance_Score","Total_Return"]
@@ -37,7 +32,6 @@ window = st.slider("Rolling average window", 1, 5, 1, key="roll")
 
 tab_line, tab_yoy = st.tabs(["Rolling Avg", "YoY % Change"])
 
-# --- Rolling average line plot ---
 with tab_line:
     if sel_metrics:
         fig, ax = plt.subplots(figsize=(8, 4))
@@ -56,7 +50,6 @@ with tab_line:
     else:
         st.info("Select at least one metric ⬆️")
 
-# --- YoY bar plot ---
 with tab_yoy:
     if "ESG_Combined_Score" in df.columns:
         esg_series = df_win.groupby("year")["ESG_Combined_Score"].mean()
@@ -75,9 +68,6 @@ with tab_yoy:
 
 st.markdown("---")
 
-# -------------------------------------------------------------
-# Heatmap
-# -------------------------------------------------------------
 st.markdown("## 📊 ESG Heatmap by Division × Year")
 
 heat_df = (
