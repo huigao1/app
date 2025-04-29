@@ -48,5 +48,3 @@ mask = None
 sns.heatmap(df[heat_cols].corr(), annot=True, cmap='coolwarm', fmt='.2f', ax=ax2, mask=mask)
 ax2.set_title('Pearson correlations')
 st.pyplot(fig2)
-
-st.caption("Hover over heatmap cells or use tabs for detailed distributions.")
