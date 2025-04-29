@@ -5,21 +5,6 @@ from utils import load_esg_zip
 
 st.title("📝 Model Pipeline & Ratio Definitions")
 
-ratio_info = pd.DataFrame([
-    ["CapEx_Intensity", "Capital_Expenditures / Revenues_Total", "Asset‑intensity"],
-    ["Debt_Ratio", "Liabilities_Total / Assets_Total", "Balance‑sheet leverage"],
-    ["Log_Assets", "ln(Assets_Total)", "Firm size"],
-    ["Asset_Turnover", "Revenues_Total / Assets_Total", "Efficiency"],
-    ["ROA", "Net_Income / Assets_Total", "Return on assets"],
-    ["ROE", "Net_Income / Common_Equity_Total", "Return on equity"],
-    ["Net_Profit_Margin", "Net_Income / Revenues_Total", "Income share of sales"],
-    ["Total_Return", "(Price_t − Price_{t−1}) / Price_{t−1}", "Annual stock return"],
-], columns=["Ratio", "Formula", "Intuition"]).set_index("Ratio")
-
-st.subheader("Key Features & Targets")
-st.dataframe(ratio_info)
-
-# Define feature details for EBITDA Margin model
 ebitda_features = pd.DataFrame([
     ["Asset_Turnover", "Revenues_Total / Assets_Total", "Measures efficiency in using assets to generate sales"],
     ["Debt_Ratio", "Liabilities_Total / Assets_Total", "Captures financial leverage and risk exposure"],
@@ -32,7 +17,6 @@ ebitda_features = pd.DataFrame([
     ["ESG_Governance_Score", "WRDS ESG Score", "Represents board quality and executive oversight"]
 ], columns=["Feature", "Formula", "Why Included"])
 
-# Define feature details for Operating Margin model
 operating_features = pd.DataFrame([
     ["Asset_Turnover", "Revenues_Total / Assets_Total", "Measures efficiency in using assets to generate sales"],
     ["Debt_Ratio", "Liabilities_Total / Assets_Total", "Captures financial leverage and risk exposure"],
@@ -44,10 +28,10 @@ operating_features = pd.DataFrame([
 ], columns=["Feature", "Formula", "Why Included"])
 
 # Display tables in Streamlit
-st.subheader("📊 Features Used in EBITDA Margin Model")
+st.subheader("📊 Features Used in EBITDA Margin Prediction Model")
 st.dataframe(ebitda_features)
 
-st.subheader("📊 Features Used in Operating Margin Model")
+st.subheader("📊 Features Used in Operating Margin Prediction Model")
 st.dataframe(operating_features)
 
 with st.expander("📊 Model Pipeline"):
