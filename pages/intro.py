@@ -60,14 +60,32 @@ st.markdown(
 )
 
 
-st.markdown("### 🚀 Get Started")
+st.markdown("### 🧭 App Navigation Guide")
 st.markdown(
     """
-1. Use sidebar filters (year, division) on **EDA** pages  
-2. Check **Model Training** for feature importance & tuning  
-3. Try **Predict by Ticker** or **What-If Simulator** to stress ESG risk
-"""
+- **🏠 Welcome**  
+  Overview of the project goal, model logic, and ESG-finance context.
+
+- **🔍 About Our Data**  
+  Summary of dataset source and basic visualization. 
+
+- **📊 Industry ESG Distribution**  
+  Explore ESG score distributions across industries.
+
+- **⏳ Time-Series Trends**  
+  Visualize ESG trends over time by industry.
+  
+- **📌 Features We Used**  
+  Breakdown of financial + ESG features used in our models.
+
+- **📈 Regression Model Comparison**  
+  Compare Linear vs Gradient Boosting models performance interactively.
+
+- **🎯 Predict by Ticker**  
+  Input a stock ticker to simulate what-if analysis using real-time data.
+    """
 )
+
 
 st.markdown("---")
 
