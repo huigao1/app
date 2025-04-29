@@ -101,6 +101,6 @@ sns.heatmap(
 )
 ax3.set_xlabel("Year")
 ax3.set_ylabel("Division")
-plt.xticks(rotation=45)
+plt.xticks(rotation=90)
 plt.yticks(rotation=0)
 st.pyplot(fig3)
